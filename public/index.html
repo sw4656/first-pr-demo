@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Servicing Portfolio — Asset Management Holdings II, LLC</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bd:#1F3A6E;--bm:#2D5FA6;--bb:#4A7CC7;--bl:#D6E4F7;--bp:#EBF2FC;
+  --g10:#F4F6F8;--g20:#E8ECF0;--g30:#D0D8E0;--g60:#6B7C93;--g80:#3A4A5C;--g90:#1E2A38;
+  --grn:#1A5C2A;--grnbg:#E6F4EA;--red:#990000;--redbg:#FDECEA;--amb:#7A4800;--ambbg:#FEF3DC;
+}
+body{font-family:Arial,Helvetica,sans-serif;font-size:12px;background:var(--g10);color:var(--g90);line-height:1.45}
+.amh-company-banner{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#0A1A40 0%,#1A3070 50%,#0A1A40 100%);color:#FFF;padding:7px 20px;border-bottom:3px solid #8899CC}
+.amh-company-name{font-size:18px;font-weight:900;letter-spacing:.06em}
+.amh-company-tagline{font-size:11px;color:#99AACC;letter-spacing:.04em}
+.pbanner{background:var(--bd);border-bottom:3px solid var(--bm);display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+.pb-name{font-size:16px;font-weight:bold;color:#FFF}
+.pb-sub{font-size:10px;color:#A8C4E8;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.pb-new{background:var(--grn);color:#FFF;border:1px solid #2A7A3A;padding:7px 16px;font-size:12px;font-weight:bold;cursor:pointer}
+.pb-new:hover{background:#217a35}
+.toolbar{background:var(--g20);border-bottom:2px solid var(--g30);padding:8px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.toolbar input,.toolbar select{height:26px;border:1px solid var(--g30);padding:0 8px;font-size:11px;outline:none}
+.toolbar input{width:260px}
+.toolbar input:focus,.toolbar select:focus{border-color:var(--bm)}
+.stat{font-size:10px;color:var(--g60);margin-left:auto}
+.content{padding:16px 20px}
+table{width:100%;border-collapse:collapse;background:#FFF;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+thead th{background:var(--bd);color:#FFF;font-size:9px;font-weight:bold;text-transform:uppercase;letter-spacing:.04em;padding:7px 10px;text-align:left;cursor:pointer;white-space:nowrap}
+thead th:hover{background:var(--bm)}
+thead th.num{text-align:right}
+tbody td{padding:7px 10px;border-bottom:1px solid var(--g30);font-size:11px;vertical-align:middle}
+tbody tr:hover{background:var(--bp)}
+tbody td.num{text-align:right;font-family:'Courier New',monospace}
+.loan-link{color:var(--bd);font-weight:bold;text-decoration:none}
+.loan-link:hover{text-decoration:underline}
+.badge{font-size:9px;font-weight:bold;padding:2px 7px;border:1px solid;display:inline-block;white-space:nowrap}
+.badge.performing{background:var(--grnbg);color:var(--grn);border-color:var(--grn)}
+.badge.non_performing{background:var(--redbg);color:var(--red);border-color:var(--red)}
+.badge.reo{background:var(--ambbg);color:var(--amb);border-color:var(--amb)}
+.badge.none{background:var(--g20);color:var(--g60);border-color:var(--g30)}
+.row-actions{display:flex;gap:6px}
+.act-btn{font-size:10px;padding:3px 9px;border:1px solid var(--g30);background:#FFF;cursor:pointer;color:var(--bd)}
+.act-btn:hover{background:var(--bl)}
+.act-btn.danger{color:var(--red)}
+.act-btn.danger:hover{background:var(--redbg)}
+.empty{text-align:center;padding:50px 20px;color:var(--g60)}
+.empty div:first-child{font-size:36px;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="amh-company-banner">
+  <span class="amh-company-name">Asset Management Holdings II, LLC</span>
+  <span class="amh-company-tagline">Loan Servicing &nbsp;·&nbsp; Private Mortgage Management &nbsp;·&nbsp; Portfolio Lending</span>
+</div>
+<div class="pbanner">
+  <div>
+    <div class="pb-name">Loan Servicing Portfolio</div>
+    <div class="pb-sub">Asset Management Suite &nbsp;·&nbsp; All Accounts</div>
+  </div>
+  <button class="pb-new" onclick="createAccount()">+ New Loan Account</button>
+</div>
+<div class="toolbar">
+  <input type="text" id="q" placeholder="Search loan #, borrower, address, investor..." oninput="debouncedLoad()">
+  <select id="status-filter" onchange="loadAccounts()">
+    <option value="">All statuses</option>
+    <option value="performing">Performing</option>
+    <option value="non_performing">Non-Performing</option>
+    <option value="reo">REO</option>
+  </select>
+  <select id="sort-field" onchange="loadAccounts()">
+    <option value="updated_at">Sort: Last updated</option>
+    <option value="loan_number">Sort: Loan #</option>
+    <option value="borrower_name">Sort: Borrower</option>
+    <option value="principal_balance">Sort: Balance</option>
+    <option value="interest_rate">Sort: Rate</option>
+    <option value="origination_date">Sort: Origination date</option>
+  </select>
+  <span class="stat" id="stat-line"></span>
+</div>
+<div class="content">
+  <div id="table-wrap"></div>
+</div>
+
+<script>
+var API_BASE = '/api/accounts';
+var _debounceTimer = null;
+
+function debouncedLoad() {
+  clearTimeout(_debounceTimer);
+  _debounceTimer = setTimeout(loadAccounts, 200);
+}
+
+function fmtMoney(v) {
+  if (v === null || v === undefined || v === '') return '—';
+  var n = Number(v);
+  if (!Number.isFinite(n)) return '—';
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtPct(v) {
+  if (v === null || v === undefined || v === '') return '—';
+  var n = Number(v);
+  return Number.isFinite(n) ? n.toFixed(3) + '%' : '—';
+}
+
+function fmtDate(v) {
+  if (!v) return '—';
+  return v;
+}
+
+function esc(s) {
+  var d = document.createElement('div');
+  d.textContent = s == null ? '' : s;
+  return d.innerHTML;
+}
+
+function statusBadge(status) {
+  var cls = status || 'none';
+  var label = status ? status.replace('_', '-') : 'unset';
+  return '<span class="badge ' + esc(cls) + '">' + esc(label) + '</span>';
+}
+
+function loadAccounts() {
+  var q = document.getElementById('q').value.trim();
+  var status = document.getElementById('status-filter').value;
+  var sort = document.getElementById('sort-field').value;
+  var params = new URLSearchParams();
+  if (q) params.set('q', q);
+  if (status) params.set('status', status);
+  if (sort) params.set('sort', sort);
+  params.set('dir', sort === 'borrower_name' || sort === 'loan_number' ? 'asc' : 'desc');
+
+  fetch(API_BASE + '?' + params.toString())
+    .then(function (res) { return res.json(); })
+    .then(function (json) { renderTable(json.accounts || []); })
+    .catch(function (err) {
+      document.getElementById('table-wrap').innerHTML = '<div class="empty">Failed to load accounts: ' + esc(err.message) + '</div>';
+    });
+}
+
+function renderTable(accounts) {
+  document.getElementById('stat-line').textContent = accounts.length + ' account' + (accounts.length === 1 ? '' : 's');
+
+  if (accounts.length === 0) {
+    document.getElementById('table-wrap').innerHTML =
+      '<div class="empty"><div>&#128194;</div>No loan accounts yet.<br><br>' +
+      '<button class="pb-new" onclick="createAccount()">+ Create your first loan account</button></div>';
+    return;
+  }
+
+  var rows = accounts.map(function (a) {
+    var label = a.loan_number || '(no loan #)';
+    var borrower = [a.borrower_name, a.coborrower_name].filter(Boolean).join(' & ') || '—';
+    return '<tr>' +
+      '<td><a class="loan-link" href="/calculator.html?account=' + encodeURIComponent(a.id) + '">' + esc(label) + '</a></td>' +
+      '<td>' + esc(borrower) + '</td>' +
+      '<td>' + esc(a.property_address || '—') + '</td>' +
+      '<td>' + esc(a.investor || '—') + '</td>' +
+      '<td class="num">' + fmtPct(a.interest_rate) + '</td>' +
+      '<td class="num">' + fmtMoney(a.principal_balance) + '</td>' +
+      '<td>' + statusBadge(a.performance_status) + '</td>' +
+      '<td>' + esc((a.updated_at || '').slice(0, 10)) + '</td>' +
+      '<td><div class="row-actions">' +
+        '<button class="act-btn" onclick="location.href=\'/calculator.html?account=' + a.id + '\'">Open</button>' +
+        '<button class="act-btn danger" onclick="deleteAccount(\'' + a.id + '\', ' + JSON.stringify(label) + ')">Delete</button>' +
+      '</div></td>' +
+    '</tr>';
+  }).join('');
+
+  document.getElementById('table-wrap').innerHTML =
+    '<table><thead><tr>' +
+      '<th>Loan #</th><th>Borrower</th><th>Property Address</th><th>Investor</th>' +
+      '<th class="num">Rate</th><th class="num">Balance</th><th>Status</th><th>Updated</th><th></th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table>';
+}
+
+function createAccount() {
+  fetch(API_BASE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: {} }),
+  })
+    .then(function (res) { return res.json(); })
+    .then(function (account) {
+      window.location.href = '/calculator.html?account=' + encodeURIComponent(account.id);
+    })
+    .catch(function (err) { alert('Could not create account: ' + err.message); });
+}
+
+function deleteAccount(id, label) {
+  if (!confirm('Delete loan account ' + label + '? This cannot be undone.')) return;
+  fetch(API_BASE + '/' + encodeURIComponent(id), { method: 'DELETE' })
+    .then(function (res) {
+      if (!res.ok && res.status !== 204) throw new Error('Delete failed (' + res.status + ')');
+      loadAccounts();
+    })
+    .catch(function (err) { alert('Could not delete account: ' + err.message); });
+}
+
+loadAccounts();
+</script>
+</body>
+</html>
