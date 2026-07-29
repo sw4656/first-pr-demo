@@ -1,0 +1,15 @@
+{
+  "name": "loan-servicing-server",
+  "version": "1.0.0",
+  "description": "Backend for the WebNote loan servicing calculator: catalogues multiple loan accounts (loan servicing portfolio).",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.21.0"
+  }
+}
