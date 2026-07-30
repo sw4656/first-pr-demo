@@ -12,6 +12,37 @@
 
   var state = { accountId: null };
 
+  function injectUserBar() {
+    fetch('/api/auth/me')
+      .then(function (res) {
+        if (!res.ok) throw new Error('not authenticated');
+        return res.json();
+      })
+      .then(function (me) {
+        var bar = document.createElement('div');
+        bar.style.cssText = 'position:fixed;top:0;right:0;z-index:9999;display:flex;' +
+          'align-items:center;gap:8px;background:#0A1A40;color:#A8C4E8;font:11px Arial,sans-serif;' +
+          'padding:5px 12px;border-bottom-left-radius:4px;border:1px solid #1A3070;border-top:none;border-right:none';
+        var label = document.createElement('span');
+        label.textContent = me.name ? me.name + ' (' + me.email + ')' : me.email;
+        var btn = document.createElement('button');
+        btn.textContent = 'Log out';
+        btn.style.cssText = 'background:transparent;border:1px solid #4A7CC7;color:#FFF;' +
+          'padding:3px 9px;font-size:10px;cursor:pointer';
+        btn.onclick = function () {
+          fetch('/api/auth/logout', { method: 'POST' }).then(function () {
+            window.location.href = '/login.html';
+          });
+        };
+        bar.appendChild(label);
+        bar.appendChild(btn);
+        document.body.appendChild(bar);
+      })
+      .catch(function () {
+        window.location.href = '/login.html';
+      });
+  }
+
   function serializeFields() {
     var data = {};
     document.querySelectorAll('input[id], select[id], textarea[id]').forEach(function (el) {
@@ -142,6 +173,8 @@
       window.acctBridgeSave();
     }
   });
+
+  injectUserBar();
 
   var params = new URLSearchParams(window.location.search);
   var accountId = params.get('account');
