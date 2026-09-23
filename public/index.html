@@ -47,6 +47,9 @@ tbody td.num{text-align:right;font-family:'Courier New',monospace}
 .act-btn.danger:hover{background:var(--redbg)}
 .empty{text-align:center;padding:50px 20px;color:var(--g60)}
 .empty div:first-child{font-size:36px;margin-bottom:10px}
+.amh-user{display:flex;align-items:center;gap:10px;color:#A8C4E8;font-size:11px}
+.amh-logout{background:transparent;border:1px solid #4A7CC7;color:#FFF;padding:4px 10px;font-size:10px;cursor:pointer}
+.amh-logout:hover{background:#1A3070}
 </style>
 </head>
 <body>
@@ -54,6 +57,10 @@ tbody td.num{text-align:right;font-family:'Courier New',monospace}
 <div class="amh-company-banner">
   <span class="amh-company-name">Asset Management Holdings II, LLC</span>
   <span class="amh-company-tagline">Loan Servicing &nbsp;·&nbsp; Private Mortgage Management &nbsp;·&nbsp; Portfolio Lending</span>
+  <div class="amh-user">
+    <span id="amh-user-email"></span>
+    <button class="amh-logout" onclick="logout()">Log out</button>
+  </div>
 </div>
 <div class="pbanner">
   <div>
@@ -110,6 +117,24 @@ function fmtDate(v) {
   if (!v) return '—';
   return v;
 }
+
+function logout() {
+  fetch('/api/auth/logout', { method: 'POST' }).then(function () {
+    window.location.href = '/login.html';
+  });
+}
+
+fetch('/api/auth/me')
+  .then(function (res) {
+    if (!res.ok) throw new Error('not authenticated');
+    return res.json();
+  })
+  .then(function (me) {
+    document.getElementById('amh-user-email').textContent = me.name ? me.name + ' (' + me.email + ')' : me.email;
+  })
+  .catch(function () {
+    window.location.href = '/login.html';
+  });
 
 function esc(s) {
   var d = document.createElement('div');
