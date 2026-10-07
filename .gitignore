@@ -4,3 +4,4 @@ server/data/*.db-journal
 server/data/*.db-wal
 server/data/*.db-shm
 .DS_Store
+.env
