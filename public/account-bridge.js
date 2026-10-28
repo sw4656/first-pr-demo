@@ -220,6 +220,13 @@
     });
     if (typeof calculate === 'function') calculate();
     _labelUnsaved();
+    // Clear borrower display in header
+    const borrowerDisplay = document.getElementById('fp-borrower-display');
+    if (borrowerDisplay) borrowerDisplay.textContent = '';
+    const borrowerBar = document.getElementById('mc-borrower-bar');
+    if (borrowerBar) borrowerBar.value = '';
+    const srvBorrower = document.getElementById('srv-borrower');
+    if (srvBorrower) srvBorrower.textContent = '—';
     // Clear loan= from URL
     const url = new URL(window.location.href);
     url.searchParams.delete('loan');
