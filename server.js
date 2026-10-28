@@ -91,7 +91,7 @@ function extractIndexed(fields, userId) {
   const zip    = fields['prop-zip']    || '';
 
   return {
-    loan_number:       fields['mc-loan-number'] || `WN-${Date.now()}`,
+    loan_number:       fields['mc-loan-number'] || ('WN-' + Date.now()),
     investor_name:     fields['mc-investor-banner'] || fields['mc-investor'] || '',
     borrower_name:     borrower,
     co_borrower_name:  [fields['brow-co-first'], fields['brow-co-last']]

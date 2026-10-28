@@ -1,44 +1,43 @@
-/**
- * db.js  —  PostgreSQL connection via Knex
- *
- * Drop-in replacement for the SQLite better-sqlite3 db.js
- * in server/src/db.js.
- *
- * Requires:  npm install knex pg
- *            npm uninstall better-sqlite3
- *
- * Set DATABASE_URL in your .env file:
- *   DATABASE_URL=postgresql://user:password@host:5432/webnote_prod
- */
+const { Pool } = require('pg');
 
-'use strict';
-
-const knex = require('knex')({
-  client: 'pg',
-  connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_SSL === 'true'
-      ? { rejectUnauthorized: false }
-      : false,
-  },
-  pool: {
-    min: 2,
-    max: 10,
-    // Destroy idle connections after 30 seconds
-    idleTimeoutMillis: 30000,
-    // Reject connections that take more than 5 seconds to acquire
-    acquireTimeoutMillis: 5000,
-  },
-  // Log slow queries in development
-  asyncStackTraces: process.env.NODE_ENV === 'development',
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
 });
 
-// Verify connection on startup
-knex.raw('SELECT 1')
-  .then(() => console.log('[db] PostgreSQL connected'))
-  .catch(err => {
-    console.error('[db] PostgreSQL connection failed:', err.message);
-    process.exit(1);
-  });
+async function init() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS accounts (
+      id TEXT PRIMARY KEY,
+      loan_number TEXT,
+      borrower_name TEXT,
+      coborrower_name TEXT,
+      property_address TEXT,
+      investor TEXT,
+      servicer TEXT,
+      loan_type TEXT,
+      interest_rate DOUBLE PRECISION,
+      principal_balance DOUBLE PRECISION,
+      origination_date TEXT,
+      maturity_date TEXT,
+      performance_status TEXT,
+      settlement_status TEXT,
+      data JSONB NOT NULL DEFAULT '{}'::jsonb,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
 
-module.exports = knex;
+    CREATE INDEX IF NOT EXISTS idx_accounts_loan_number ON accounts(loan_number);
+    CREATE INDEX IF NOT EXISTS idx_accounts_borrower_name ON accounts(borrower_name);
+    CREATE INDEX IF NOT EXISTS idx_accounts_performance_status ON accounts(performance_status);
+
+    CREATE TABLE IF NOT EXISTS users (
+      id TEXT PRIMARY KEY,
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      name TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
+  `);
+}
+
+module.exports = { pool, init };

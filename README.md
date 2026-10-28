@@ -11,16 +11,30 @@ property valuation, reinstatement figures, service schedule, etc.).
 
 ```
 public/
-  index.html          Portfolio dashboard — list, search, sort, create, delete accounts
-  calculator.html      The WebNote calculator face page (per-account, opened via ?account=<id>)
-  account-bridge.js    Loads/saves the calculator's on-page fields to/from the backend
+  login.html            Staff sign-in page
+  index.html             Portfolio dashboard — list, search, sort, create, delete accounts
+  calculator.html         The WebNote calculator face page (per-account, opened via ?account=<id>)
+  account-bridge.js       Loads/saves the calculator's on-page fields to/from the backend
 server/
-  src/db.js            SQLite schema (better-sqlite3)
-  src/fields.js         Maps calculator field ids -> indexed/searchable account columns
-  src/routes/accounts.js  REST API: list/create/read/update/delete loan accounts
-  src/index.js          Express app: serves /api/accounts and the public/ static site
-  data/                SQLite database file lives here (gitignored)
+  src/db.js               Postgres connection pool + schema (accounts, users)
+  src/auth.js             Login/logout/me routes + requireAuth session middleware
+  src/fields.js            Maps calculator field ids -> indexed/searchable account columns
+  src/routes/accounts.js   REST API: list/create/read/update/delete loan accounts
+  src/index.js             Express app: sessions, auth, /api/accounts, and the public/ static site
+  scripts/create-user.js              Creates/updates a staff login (no self-service signup)
+  scripts/migrate-sqlite-to-postgres.js  One-time copy of legacy SQLite data into Postgres
+  data/                    Legacy SQLite database file, if present (gitignored)
 ```
+
+## Authentication
+
+This app is for internal staff only (no borrower/investor accounts). There's
+no self-service signup — an admin creates one login per staff member with the
+`create-user` script (below), and everything under `/` and `/api/accounts`
+requires a signed-in session.
+
+Sessions are stored in Postgres (via `connect-pg-simple`) rather than in
+memory, so restarting the server doesn't log everyone out.
 
 **How an account's data is stored.** The calculator page has ~175 input/select
 fields (loan terms, borrower info, balances, servicing contacts, property
@@ -36,16 +50,36 @@ field by id, then re-runs the page's own calculation functions.
 
 ## Running locally
 
+Requires a Postgres database (14+). Locally, the quickest path is Docker:
+
+```bash
+docker run --name loan-servicing-db -e POSTGRES_PASSWORD=devpass \
+  -e POSTGRES_DB=loan_servicing -p 5432:5432 -d postgres:16
+```
+
+Then:
+
 ```bash
 cd server
 npm install
+cp .env.example .env
+# edit .env: set DATABASE_URL (e.g. postgres://postgres:devpass@localhost:5432/loan_servicing)
+# and SESSION_SECRET (node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
+
+# If you have an existing server/data/loans.db from before the Postgres
+# migration, copy its rows into Postgres:
+node scripts/migrate-sqlite-to-postgres.js
+
+# Create a login for yourself (repeat once per staff member, up to ~7-8 users):
+node scripts/create-user.js you@company.com "Your Name"
+
 npm start          # http://localhost:3000
 ```
 
-Open `http://localhost:3000/` for the portfolio dashboard. Click **+ New Loan
-Account** to open a blank calculator, fill it in, and click **Save** (or
-Ctrl/Cmd+S) to persist it. Each account's calculator lives at
-`/calculator.html?account=<id>`.
+Open `http://localhost:3000/` — you'll be redirected to `/login.html` until
+you sign in. Click **+ New Loan Account** to open a blank calculator, fill it
+in, and click **Save** (or Ctrl/Cmd+S) to persist it. Each account's
+calculator lives at `/calculator.html?account=<id>`.
 
 ## API
 
@@ -59,9 +93,9 @@ Ctrl/Cmd+S) to persist it. Each account's calculator lives at
 
 ## Roadmap toward asset management software
 
-This first pass is intentionally a single-tenant CRUD backend. Natural next
-steps: authentication/authorization (multi-user, per-investor access), an
-audit log of field-level changes, document storage for the "File Documents"
-tab (currently just links), payment/transaction history as first-class rows
-instead of a JSON blob, and portfolio-level reporting (aggregate UPB, roll
-rates, delinquency buckets) across all accounts.
+Staff authentication and the Postgres migration are done. Natural next
+steps: per-role authorization (not every staff login needs the same
+access), an audit log of field-level changes, document storage for the
+"File Documents" tab (currently just links), payment/transaction history as
+first-class rows instead of a JSON blob, and portfolio-level reporting
+(aggregate UPB, roll rates, delinquency buckets) across all accounts.
