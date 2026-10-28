@@ -1,0 +1,32 @@
+{
+  "name": "first-pr-demo",
+  "version": "1.0.0",
+  "description": "A backend that hosts the \"WebNote Replacement BETA\" loan servicing calculator\r (the single-page HTML \"face page\") and catalogues an arbitrary number of loan\r servicing accounts behind it. This is the first slice of a longer-term asset\r management platform: a portfolio of loan accounts, each with its own full\r calculator state (payment terms, balances, escrow, servicing contacts,\r property valuation, reinstatement figures, service schedule, etc.).",
+  "main": "hello.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sw4656/first-pr-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sw4656/first-pr-demo/issues"
+  },
+  "homepage": "https://github.com/sw4656/first-pr-demo#readme",
+  "dependencies": {
+    "body-parser": "^2.4.0",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-session": "^1.19.0",
+    "knex": "^3.3.0",
+    "pg": "^8.23.1"
+  }
+}
