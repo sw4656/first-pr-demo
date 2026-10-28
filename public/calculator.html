@@ -14,11 +14,11 @@
   --ai-accent:#4A9EFF;--ai-text:#C8DCF4;--ai-muted:#6888AA;
   --doc-bg:var(--g10);--doc-panel:var(--g20);--doc-border:var(--g30);--doc-accent:var(--bd);
 }
-body{font-family:Arial,Helvetica,sans-serif;font-size:12px;background:var(--g20);color:var(--g90);height:100vh;overflow:hidden;line-height:1.45}
+body{font-family:Arial,Helvetica,sans-serif;font-size:12px;background:var(--g20);color:var(--g90);height:100vh;overflow:hidden;line-height:1.35}
 button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:var(--g90)}
 /* LAYOUT */
 .window{display:flex;flex-direction:column;height:100vh;overflow:hidden}
-.title-bar{height:26px;background:linear-gradient(180deg,var(--bm),var(--bd));display:flex;align-items:center;gap:6px;padding:0 8px;flex-shrink:0;border-bottom:2px solid var(--bd);user-select:none}
+.title-bar{height:20px;background:linear-gradient(180deg,var(--bm),var(--bd));display:flex;align-items:center;gap:6px;padding:0 8px;flex-shrink:0;border-bottom:1px solid var(--bd);user-select:none}
 .tb-logo{width:18px;height:18px;display:flex;align-items:center;justify-content:center;background:#FFF2;border:1px solid #FFF3}
 .tb-title{flex:1;font-size:11px;font-weight:bold;color:#FFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tb-btns{display:flex;gap:2px}
@@ -41,9 +41,9 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .mnu:hover{background:var(--bd);color:#FFF}
 .mnu-sep{width:1px;height:12px;background:var(--g40);margin:0 2px}
 /* TOOLBAR */
-.toolbar{background:var(--g10);border-bottom:2px solid var(--g30);padding:2px 8px;display:flex;align-items:center;gap:2px;flex-shrink:0;flex-wrap:wrap;user-select:none}
+.toolbar{background:var(--g10);border-bottom:2px solid var(--g30);padding:1px 6px;display:flex;align-items:center;gap:2px;flex-shrink:0;flex-wrap:nowrap;user-select:none}
 .tsep{width:1px;height:18px;border-left:1px solid var(--g40);border-right:1px solid var(--hi);margin:0 3px}
-.tbtn{height:22px;padding:0 8px;background:linear-gradient(180deg,#FAFBFC,#DDE4EC);border-top:1px solid var(--hi);border-left:1px solid var(--hi);border-right:1px solid var(--lo);border-bottom:1px solid var(--lo);display:flex;align-items:center;gap:3px;font-size:11px;white-space:nowrap;cursor:pointer}
+.tbtn{height:19px;padding:0 6px;background:linear-gradient(180deg,#FAFBFC,#DDE4EC);border-top:1px solid var(--hi);border-left:1px solid var(--hi);border-right:1px solid var(--lo);border-bottom:1px solid var(--lo);display:flex;align-items:center;gap:3px;font-size:10px;white-space:nowrap;cursor:pointer}
 .tbtn:hover{background:linear-gradient(180deg,var(--bl),#BDD4EE);border-color:var(--bm);color:var(--bd)}
 .tbtn.doc-btn{background:linear-gradient(180deg,#FAFBFC,#DDE4EC);color:var(--bd);border-color:var(--lo);border-bottom-color:var(--bm)}
 .tbtn.doc-btn:hover{background:linear-gradient(180deg,var(--bl),#BDD4EE);border-color:var(--bm);color:var(--bd)}
@@ -348,7 +348,7 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-serious{background:#4A0000;color:#FF4444;border-color:#FF4444}
 
 /* ── SERVICER BANNER ── */
-.fp-svc-banner{background:#0D2240;border-bottom:3px solid #1A3A6A;flex-shrink:0;user-select:none}
+.fp-svc-banner{background:linear-gradient(180deg,#1A3070,#0F2050);padding:0;flex-shrink:0;border-bottom:2px solid #8899CC}
 
 .fp-svc-row1{display:flex;align-items:center;padding:5px 14px 4px;border-bottom:1px solid #1A3A6A;gap:10px}
 .fp-svc-r1-left{flex:1}
@@ -404,7 +404,7 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 
 .fp-top-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--g30);overflow:visible;align-items:start}
 .fp-panel{border-right:1px solid var(--g30);overflow:visible;display:flex;flex-direction:column}
-.fp-panel-hdr{background:linear-gradient(180deg,#2A4A8A,#1A3070);color:#FFF;font-size:13px;font-weight:900;padding:5px 10px;text-align:center;letter-spacing:.05em;border-bottom:2px solid var(--bd);text-transform:uppercase}
+.fp-panel-hdr{background:linear-gradient(180deg,#2A4A8A,#1A3070);color:#FFF;font-size:11px;font-weight:900;padding:3px 8px;text-align:center;letter-spacing:.06em;border-bottom:2px solid var(--bd);text-transform:uppercase}
 /* fp-flags-panel removed — flags moved to bottom strip */
 /* fp-status-col moved to fp-status-strip */
 
@@ -412,18 +412,18 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-tbl{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
 .fp-tbl tr{}.fp-tbl tr:nth-child(even) td{background:#EBF1F8}
 .fp-tbl tr:nth-child(odd) td{background:#F6F8FA}
-.fp-lbl{width:76px;color:#0D1E3C;font-size:12px;font-weight:bold;padding:3px 4px 3px 6px;white-space:nowrap;border-right:1px solid var(--g40);border-bottom:1px solid var(--g30);vertical-align:middle}
-.fp-val{padding:3px 4px;border-bottom:1px solid var(--g30);border-right:1px solid var(--g30);vertical-align:middle}
-.fp-calc{font-family:'Courier New',monospace;font-size:13px;font-weight:900;color:#0A1A60;background:#D0E4FF!important;letter-spacing:.01em}
+.fp-lbl{width:72px;color:#0D1E3C;font-size:11px;font-weight:900;padding:2px 4px 2px 5px;white-space:nowrap;border-right:1px solid var(--g40);border-bottom:1px solid var(--g30);vertical-align:middle;letter-spacing:.01em}
+.fp-val{padding:2px 3px;border-bottom:1px solid var(--g30);border-right:1px solid var(--g30);vertical-align:middle}
+.fp-calc{background:#EEF3FF;color:#1A2A7A;font-size:12px;font-family:'Courier New',monospace;padding:0 4px;vertical-align:middle;min-height:20px;line-height:20px;font-weight:700}
 .fp-money{color:#002299;text-shadow:0 0 0 transparent}
 .fp-red{color:#880000!important;font-weight:900!important}
 .fp-grn{color:#004400!important;font-weight:900!important}
-.fp-ni{width:96px;height:22px;min-height:20px;background:#FFFEF8;border:1px solid #7788AA;border-top-color:#445577;border-left-color:#445577;padding:0 4px;font-size:13px;font-family:'Courier New',monospace;font-weight:700;color:#0A1A40;outline:none;-moz-appearance:textfield}
+.fp-ni{width:96px;height:20px;min-height:18px;background:#FAFCFF;border:1.5px solid #5566AA;border-top-color:#334488;border-left-color:#334488;padding:0 4px;font-size:12px;font-family:'Courier New',monospace;font-weight:700;color:#0A1A40;outline:none;-moz-appearance:textfield;border-radius:2px}
 .fp-ni::-webkit-inner-spin-button,.fp-ni::-webkit-outer-spin-button{-webkit-appearance:none}
 .fp-ni:focus{border:2px solid var(--bm)!important;background:#FFFFF0!important;box-shadow:inset 0 1px 4px rgba(0,0,80,.15)}
-.fp-nd{width:114px;height:21px;background:#FFF;border:1px solid #8899BB;border-top-color:#556688;border-left-color:#556688;padding:0 3px;font-size:12px;font-family:'Courier New',monospace;font-weight:600;color:#1A2A4A;outline:none}
+.fp-nd{width:110px;height:20px;background:#FAFCFF;border:1.5px solid #5566AA;border-top-color:#334488;border-left-color:#334488;padding:0 3px;font-size:11px;font-family:'Courier New',monospace;font-weight:600;color:#1A2A4A;outline:none;border-radius:2px}
 .fp-nd:focus{border:1px solid var(--bm);background:#FFFEF0}
-.fp-ns{width:138px;height:21px;background:#FFF;border:1px solid #8899BB;border-top-color:#556688;border-left-color:#556688;padding:0 3px;font-size:12px;font-weight:600;color:#1A2A4A;outline:none}
+.fp-ns{width:134px;height:20px;background:#FAFCFF;border:1.5px solid #5566AA;border-top-color:#334488;border-left-color:#334488;padding:0 3px;font-size:11px;font-weight:600;color:#1A2A4A;outline:none;border-radius:2px}
 .fp-ns:focus{border:1px solid var(--bm)}
 .fp-unit{font-size:10px;color:var(--g60);margin-left:2px}
 .fp-chk{width:11px;height:11px;accent-color:var(--bm);margin-right:3px;vertical-align:middle}
@@ -440,9 +440,9 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 
 /* Right status column */
 .fp-status-items{padding:2px 3px;display:flex;flex-direction:column;gap:1px}
-.fp-si{font-size:11px;padding:1px 4px;color:#0D1E3C;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+.fp-si{font-size:10px;padding:1px 0;display:flex;align-items:center;gap:3px}
 .fp-si-grn{color:#1A5C2A;font-weight:bold}
-.fp-si-lbl{color:var(--g60);font-size:9px;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.fp-si-lbl{font-size:9px;font-weight:bold;color:var(--g60);text-transform:uppercase;letter-spacing:.04em;margin-bottom:1px}
 .fp-si-divider{height:1px;background:var(--g30);margin:3px 0}
 
 .dc-doc-item.dc-doc-disabled{opacity:.65;cursor:not-allowed;pointer-events:none}
@@ -459,7 +459,7 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-phone-input{width:130px!important}
 
 /* ── LOAN MOD TERMS TABLE — roomier than standard fp-tbl ── */
-.fp-mod-tbl{width:100%;border-collapse:collapse;font-size:13px;height:100%}
+.fp-mod-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .fp-mod-tbl tr{border-bottom:1px solid var(--g30);height:1%}
 .fp-mod-tbl tr:nth-child(even) td{background:#EBF1F8}
 .fp-mod-tbl tr:nth-child(odd) td{background:#F6F8FA}
@@ -467,7 +467,7 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-mod-tbl td.fp-val{padding:5px 8px;border-bottom:1px solid var(--g30);border-right:1px solid var(--g30);vertical-align:middle}
 .fp-mod-tbl .fp-ni{height:26px;font-size:14px;width:110px}
 .fp-mod-tbl .fp-nd{height:26px;font-size:13px;width:140px}
-.fp-mod-tbl .fp-calc{font-size:14px;padding:4px 8px}
+.fp-mod-tbl .fp-calc{background:#EEF3FF;color:#1A2A7A;font-size:12px;font-family:'Courier New',monospace;padding:0 4px;vertical-align:middle;min-height:20px;line-height:20px;font-weight:700}
 .fp-mod-col{border-right:1px solid var(--g30);display:flex;flex-direction:column}
 .fp-mod-col:last-child{border-right:none}
 .fp-mod-tbl .fp-ns{width:100%;height:26px;font-size:13px}
@@ -478,7 +478,7 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-mod-col:last-child{border-right:none}
 .fp-mod-col-notes{}
 /* ── SERVICING & COLLECTIONS TABLE — full-width, roomier ── */
-.fp-svc-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.fp-svc-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .fp-svc-tbl tr{border-bottom:1px solid var(--g30)}
 .fp-svc-tbl tr:nth-child(even) td{background:#EBF1F8}
 .fp-svc-tbl tr:nth-child(odd) td{background:#F6F8FA}
@@ -491,7 +491,7 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-svc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:1px solid var(--g30)}
 .fp-svc-grp{border-right:1px solid var(--g30);padding-bottom:4px}
 .fp-svc-grp:last-child{border-right:none}
-.fp-svc-grp-hdr{background:linear-gradient(180deg,#3A5A9A,#2A4070);color:#FFF;font-size:12px;font-weight:800;padding:4px 10px;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid #4A6AAA}
+.fp-svc-grp-hdr{background:linear-gradient(180deg,#2A4A8A,#1A3070);color:#FFF;font-size:10px;font-weight:900;padding:2px 8px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
 
 /* ── AMORTIZATION CONTROLS ── */
 .amort-controls{display:flex;align-items:center;gap:14px;padding:5px 10px;background:var(--g20);border-bottom:2px solid var(--g30);flex-wrap:wrap;flex-shrink:0}
@@ -554,16 +554,16 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-brow-divider{background:var(--g30);width:1px}
 .fp-brow-col{display:flex;flex-direction:column}
 .fp-brow-col-hdr{background:linear-gradient(180deg,#2A4A8A,#1A3070);color:#FFF;font-size:13px;font-weight:900;padding:5px 10px;letter-spacing:.05em;text-transform:uppercase;text-align:center;border-bottom:2px solid var(--bd)}
-.fp-brow-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.fp-brow-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .fp-brow-tbl tr{border-bottom:1px solid var(--g30)}
 .fp-brow-tbl tr:last-child{border-bottom:none}
 .fp-brow-tbl tr:nth-child(even) td{background:#EBF1F8}
 .fp-brow-tbl tr:nth-child(odd) td{background:#F6F8FA}
-.fp-brow-lbl{width:128px;color:#0D1E3C;font-size:12px;font-weight:bold;padding:3px 6px 3px 8px;white-space:nowrap;border-right:1px solid var(--g40);vertical-align:middle;text-align:right}
+.fp-brow-lbl{font-size:10px;font-weight:900;color:#0D1E3C;padding:2px 4px 2px 5px;white-space:nowrap;border-right:1px solid var(--g40);border-bottom:1px solid var(--g30);vertical-align:middle;width:90px;letter-spacing:.01em}
 .fp-brow-lbl-r{padding-left:12px;text-align:right}
-.fp-brow-val{padding:2px 4px;vertical-align:middle}
+.fp-brow-val{padding:2px 3px;border-bottom:1px solid var(--g30);border-right:1px solid var(--g30);vertical-align:middle}
 /* Text inputs */
-.fp-brow-ni{height:24px;background:#FFF;border:1px solid #8899BB;border-top-color:#556688;border-left-color:#556688;padding:0 5px;font-size:13px;font-weight:600;color:#1A2A4A;outline:none}
+.fp-brow-ni{height:19px;background:#FAFCFF;border:1.5px solid #5566AA;border-top-color:#334488;border-left-color:#334488;padding:0 3px;font-size:11px;font-family:'Courier New',monospace;font-weight:600;color:#0A1A40;outline:none;width:100%;border-radius:2px}
 .fp-brow-ni:focus{border:1px solid var(--bm);background:#FFFEF0}
 .fp-brow-nd{width:134px;height:24px;background:#FFF;border:1px solid #8899BB;border-top-color:#556688;border-left-color:#556688;padding:0 5px;font-size:12px;font-family:'Courier New',monospace;font-weight:600;color:#1A2A4A;outline:none}
 .fp-brow-nd:focus{border:1px solid var(--bm);background:#FFFEF0}
@@ -690,14 +690,9 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 
 /* ── BORROWER LEFT COLUMN: flex so mailing stays at bottom ── */
 .fp-brow-left{display:flex;flex-direction:column;flex:1}
-.fp-brow-left .fp-brow-tbl{flex:1}
+.fp-brow-left .fp-brow-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .fp-mail-section{border-top:2px solid var(--bd);flex-shrink:0;margin-top:auto}
-.fp-mail-hdr{
-  background:linear-gradient(180deg,#3A5A9A,#2A4070);
-  color:#FFF;font-size:11px;font-weight:bold;
-  padding:3px 8px;letter-spacing:.04em;text-transform:uppercase;
-  display:flex;align-items:center;justify-content:space-between;
-}
+.fp-mail-hdr{background:linear-gradient(180deg,#3A5A9A,#2A4070);color:#FFF;font-size:9px;font-weight:bold;padding:2px 6px;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
 
 /* ── STATUS FLAGS in bottom strip — inline wrap layout ── */
 .fp-status-flags-group{flex:1;min-width:300px;max-width:none;border-right:1px solid var(--g30);padding-right:14px}
@@ -709,28 +704,108 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-flag-inline.fp-flag-danger{color:#880000}
 
 /* ── PROPERTY INFO PINNED SUMMARY BAR ── */
-.fp-prop-summary{
-  display:flex;align-items:center;gap:20px;
-  padding:5px 14px;background:var(--g10);
-  border-bottom:2px solid var(--bm);flex-shrink:0;flex-wrap:wrap;
-}
+.fp-prop-summary{display:flex;align-items:center;gap:16px;padding:3px 10px;background:var(--g10);border-bottom:2px solid var(--bm);flex-shrink:0;flex-wrap:wrap}
 .fp-prop-sum-group{display:flex;align-items:center;gap:6px}
 .fp-prop-sum-lbl{font-size:11px;font-weight:bold;color:var(--g60);
   white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
-.fp-prop-sum-val{font-family:'Courier New',monospace;font-size:14px;
-  font-weight:900;color:var(--bd)}
+.fp-prop-sum-val{font-family:'Courier New',monospace;font-size:13px;font-weight:900;color:var(--bd)}
 .fp-prop-sum-input{width:120px!important;height:24px!important;font-size:13px!important}
+
+/* ── HELOC / IO PANEL ── */
+/* ── HELOC / IO DEDICATED TABLE STYLE ── */
+#heloc-fields, #io-fields{background:var(--g10)}
+.heloc-tbl{width:100%;border-collapse:collapse}
+.heloc-tbl tr:nth-child(even){background:#EEE8FF}
+.heloc-tbl tr:nth-child(odd){background:#F8F5FF}
+.heloc-tbl .hl{
+  width:110px;font-size:11px;font-weight:900;color:#2A0860;
+  padding:3px 6px 3px 8px;white-space:nowrap;
+  border-right:2px solid #9977CC;border-bottom:1px solid #CCC0EE;
+  vertical-align:middle;letter-spacing:.01em}
+.heloc-tbl .hv{
+  padding:3px 5px;border-bottom:1px solid #CCC0EE;
+  border-right:1px solid #DDD0F0;vertical-align:middle}
+.heloc-tbl .hv input{
+  width:100%;height:22px;background:#FDFAFF;
+  border:1.5px solid #8855CC;border-top-color:#5533AA;
+  border-left-color:#5533AA;padding:0 5px;
+  font-size:13px;font-family:'Courier New',monospace;
+  font-weight:700;color:#2A0860;outline:none;
+  -moz-appearance:textfield;border-radius:2px;box-sizing:border-box}
+.heloc-tbl .hv input:focus{
+  border-color:#6633FF!important;
+  box-shadow:0 0 0 2px rgba(102,51,255,.15);background:#FAFAFF!important}
+.heloc-tbl .hv input::-webkit-inner-spin-button,
+.heloc-tbl .hv input::-webkit-outer-spin-button{-webkit-appearance:none}
+.heloc-out{
+  background:#EEF3FF;color:#1A2A7A;font-size:13px;
+  font-family:'Courier New',monospace;font-weight:900;
+  padding:0 6px;border-bottom:1px solid #CCC0EE;
+  border-right:1px solid #DDD0F0;vertical-align:middle}
+.heloc-sub-hdr{
+  font-size:9px;font-weight:900;color:#6644AA;text-transform:uppercase;
+  letter-spacing:.06em;padding:2px 8px;background:#E8E0FF;
+  border-bottom:1px solid #CCC0EE;border-top:1px solid #CCC0EE}
+/* IO table same base, green accent */
+.io-tbl{width:100%;border-collapse:collapse}
+.io-tbl tr:nth-child(even){background:#E8F8ED}
+.io-tbl tr:nth-child(odd){background:#F4FBF6}
+.io-tbl .hl{
+  width:110px;font-size:11px;font-weight:900;color:#0A3A1A;
+  padding:3px 6px 3px 8px;white-space:nowrap;
+  border-right:2px solid #44AA66;border-bottom:1px solid #AADDBB;
+  vertical-align:middle;letter-spacing:.01em}
+.io-tbl .hv{
+  padding:3px 5px;border-bottom:1px solid #AADDBB;
+  border-right:1px solid #CCEECC;vertical-align:middle}
+.io-tbl .hv input{
+  width:100%;height:22px;background:#F6FFF8;
+  border:1.5px solid #44AA66;border-top-color:#226633;
+  border-left-color:#226633;padding:0 5px;
+  font-size:13px;font-family:'Courier New',monospace;
+  font-weight:700;color:#0A3A1A;outline:none;
+  -moz-appearance:textfield;border-radius:2px;box-sizing:border-box}
+.io-tbl .hv input:focus{
+  border-color:#22AA44!important;
+  box-shadow:0 0 0 2px rgba(34,170,68,.15)}
+.io-tbl .hv input::-webkit-inner-spin-button,
+.io-tbl .hv input::-webkit-outer-spin-button{-webkit-appearance:none}
+.io-out{
+  background:#EEF8F0;color:#0A3A1A;font-size:13px;
+  font-family:'Courier New',monospace;font-weight:900;
+  padding:0 6px;border-bottom:1px solid #AADDBB;
+  border-right:1px solid #CCEECC;vertical-align:middle}
 /* ── COLLAPSIBLE SECTIONS ── */
 .collapse-hdr{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
 .collapse-hdr:hover{filter:brightness(1.08)}
-.collapse-toggle{font-size:11px;font-weight:bold;color:rgba(255,255,255,.75);
-  background:rgba(0,0,0,.18);border-radius:3px;padding:1px 7px;margin-left:8px;
-  transition:transform .2s;display:inline-block;flex-shrink:0}
+.collapse-toggle{font-size:9px;font-weight:bold;color:rgba(255,255,255,.7);background:rgba(0,0,0,.18);border-radius:2px;padding:1px 5px;margin-left:6px;display:inline-block;flex-shrink:0}
 .collapse-body{overflow:hidden;transition:max-height .28s ease,opacity .2s ease;
   max-height:2000px;opacity:1}
 .collapse-body.collapsed{max-height:0;opacity:0}
 
 /* ── STATUS / INFO STRIP — full-width below Property Info ── */
+/* ── ACTIVITY LOG / NOTES ── */
+.fp-notes-panel{border-top:2px solid var(--bd);background:#F0F4F8;flex-shrink:0;}
+.fp-notes-body{padding:6px 10px 8px;}
+.fp-notes-compose{display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;}
+.fp-notes-input{flex:1;font-size:11px;font-family:Arial,sans-serif;padding:4px 6px;
+  border:1px solid var(--g30);border-radius:3px;resize:none;height:46px;
+  background:#FFF;color:var(--g90);line-height:1.4;}
+.fp-notes-input:focus{outline:none;border-color:var(--bm);box-shadow:0 0 0 1px var(--bm);}
+.fp-notes-add-btn{padding:4px 10px;font-size:11px;font-weight:bold;background:linear-gradient(180deg,#2D5FA6,#1A3070);
+  color:#FFF;border:1px solid #1A3070;border-radius:3px;cursor:pointer;white-space:nowrap;height:46px;}
+.fp-notes-add-btn:hover{background:linear-gradient(180deg,#3A72BE,#2A4A8A);}
+.fp-notes-list{max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;}
+.fp-note-entry{background:#FFF;border:1px solid var(--g30);border-left:3px solid var(--bm);
+  border-radius:3px;padding:5px 8px;position:relative;}
+.fp-note-entry.fp-note-system{border-left-color:var(--g40);}
+.fp-note-meta{font-size:9px;color:var(--g60);margin-bottom:2px;display:flex;justify-content:space-between;align-items:center;}
+.fp-note-text{font-size:11px;color:var(--g90);line-height:1.4;white-space:pre-wrap;word-break:break-word;}
+.fp-note-del{font-size:9px;color:#990000;cursor:pointer;padding:0 2px;opacity:.6;}
+.fp-note-del:hover{opacity:1;}
+.fp-notes-empty{font-size:11px;color:var(--g60);font-style:italic;padding:4px 2px;}
+.fp-notes-offline{font-size:10px;color:#7A4800;padding:3px 6px;background:#FFF3CD;border-radius:3px;margin-top:4px;}
+
 .fp-status-strip{
   border-top:2px solid var(--bd);background:#F0F4F8;flex-shrink:0;
   display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;
@@ -738,17 +813,10 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
 .fp-status-strip .fp-panel-hdr{
   width:100%;flex-shrink:0;
 }
-.fp-status-strip-inner{
-  display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;
-  padding:6px 14px;width:100%;
-}
-.fp-status-group{
-  display:flex;flex-direction:column;gap:2px;min-width:90px;
-  border-right:1px solid var(--g30);padding-right:14px;margin-right:0;
-}
+.fp-status-strip-inner{display:flex;flex-wrap:wrap;align-items:center;gap:0 14px;padding:4px 10px;width:100%}
+.fp-status-group{display:flex;flex-direction:column;gap:1px;min-width:80px;border-right:1px solid var(--g30);padding-right:10px;margin-right:0}
 .fp-status-group:last-child{border-right:none}
-.fp-si-lbl{font-size:10px;font-weight:bold;color:var(--g60);
-  text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.fp-si-lbl{font-size:9px;font-weight:bold;color:var(--g60);text-transform:uppercase;letter-spacing:.04em;margin-bottom:1px}
 </style>
 </head>
 <body>
@@ -781,9 +849,9 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
   <div class="tbtn">&#128196; New</div><div class="tbtn">&#128194; Open</div><div class="tbtn">&#128190; Save</div><div class="tsep"></div>
   <div class="tbtn" onclick="runCalculate()">&#9654; Calculate</div>
   <div class="tsep"></div>
-  <div class="tbtn" onclick="acctBridgeSave()" style="background:var(--g20);border-bottom:2px solid #1A5C2A;color:#1A5C2A;font-weight:bold;">&#128190; Save Loan</div>
-  <div class="tbtn" onclick="acctBridgeNew()" style="color:var(--bd);">&#10133; New Loan</div>
-  <div class="tbtn" onclick="acctBridgeOpen()">&#128196; Portfolio</div>
+  <div class="tbtn" onclick="(typeof acctBridgeSave==='function'?acctBridgeSave:demoSave)()" style="background:var(--g20);border-bottom:2px solid #1A5C2A;color:#1A5C2A;font-weight:bold;">&#128190; Save Loan</div>
+  <div class="tbtn" onclick="(typeof acctBridgeNew==='function'?acctBridgeNew:demoNew)()" style="color:var(--bd);">&#10133; New Loan</div>
+  <div class="tbtn" onclick="(typeof acctBridgeOpen==='function'?acctBridgeOpen:demoPortfolio)()">&#128196; Portfolio</div>
   <span id="acct-bridge-label" style="font-size:10px;font-weight:bold;padding:2px 9px;border-radius:3px;background:#7A3A00;color:#FFF;margin-left:4px;align-self:center;">Unsaved</span>
   <div class="tsep"></div>
   <div class="tbtn" onclick="showTab('reinstatement')" style="color:var(--red);">&#9888; Reinstatement</div>
@@ -1190,11 +1258,13 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
         <tr>
           <td class="fp-lbl">Loan Type</td>
           <td class="fp-val" colspan="3">
-            <select class="fp-ns" id="mc-loan-type">
+            <select class="fp-ns" id="mc-loan-type" onchange="_onLoanTypeChange()">
               <option value="">— Select —</option>
               <option value="Conventional">Conventional</option>
               <option value="Adjustable Rate">Adjustable Rate</option>
-              <option value="Per Diem" selected>Per Diem</option>
+              <option value="Per Diem">Per Diem</option>
+              <option value="HELOC">HELOC</option>
+              <option value="Interest Only">Interest Only</option>
             </select>
           </td>
         </tr>
@@ -1255,6 +1325,121 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
         </tr>
         </tbody><!-- /terms-collapse -->
       </table>
+
+      <!-- ── HELOC FIELDS (shown only when Loan Type = HELOC) ── -->
+      <div id="heloc-fields" style="display:none;border-top:2px solid var(--bm);">
+        <div style="background:linear-gradient(180deg,#3A1070,#2A0860);color:#FFF;
+                    font-size:11px;font-weight:bold;padding:3px 10px;
+                    letter-spacing:.05em;text-transform:uppercase;">
+          HELOC Parameters
+        </div>
+        <table class="heloc-tbl">
+          <!-- ── Inputs row 1: Balance fields ── -->
+          <tr>
+            <td class="hl">Credit Limit</td>
+            <td class="hv"><input type="text" id="heloc-credit-limit"
+              value="0.00" title="Total HELOC credit line"
+              onfocus="_ciF(this)" onblur="_ciB(this)" oninput="_ciI(this)"></td>
+            <td class="hl">Drawn Amount</td>
+            <td class="hv"><input type="text" id="heloc-drawn"
+              value="0.00" title="Current outstanding draw balance"
+              onfocus="_ciF(this)" onblur="_ciB(this)" oninput="_ciI(this)"></td>
+          </tr>
+          <!-- ── Inputs row 2: Rate fields ── -->
+          <tr>
+            <td class="hl">Prime Rate %</td>
+            <td class="hv"><input type="number" id="heloc-prime"
+              value="8.5" min="0" max="30" step="0.01"
+              title="Current US Prime Rate"></td>
+            <td class="hl">Margin %</td>
+            <td class="hv"><input type="number" id="heloc-margin"
+              value="1.5" min="0" max="15" step="0.01"
+              title="Lender margin above Prime"></td>
+          </tr>
+          <!-- ── Inputs row 3: Rate caps ── -->
+          <tr>
+            <td class="hl">Floor Rate %</td>
+            <td class="hv"><input type="number" id="heloc-floor"
+              value="3.0" min="0" max="30" step="0.01"
+              title="Minimum rate (floor) — effective rate never goes below this"></td>
+            <td class="hl">Ceiling Rate %</td>
+            <td class="hv"><input type="number" id="heloc-ceiling"
+              value="18.0" min="0" max="30" step="0.01"
+              title="Maximum rate (cap) — effective rate never goes above this"></td>
+          </tr>
+          <!-- ── Inputs row 4: Period fields ── -->
+          <tr>
+            <td class="hl">Draw Period (mo)</td>
+            <td class="hv"><input type="number" id="heloc-draw-months"
+              value="120" min="1" step="1"
+              title="Draw period in months — typically 120 (10 years)"></td>
+            <td class="hl">Repay Period (mo)</td>
+            <td class="hv"><input type="number" id="heloc-repay-months"
+              value="240" min="1" step="1"
+              title="Repayment period in months — typically 240 (20 years)"></td>
+          </tr>
+          <!-- ── Inputs row 5: Elapsed ── -->
+          <tr>
+            <td class="hl">Months Elapsed</td>
+            <td class="hv"><input type="number" id="heloc-months-elapsed"
+              value="0" min="0" step="1"
+              title="Months since HELOC was opened"></td>
+            <td class="hl">Current Phase</td>
+            <td class="heloc-out" id="heloc-phase">—</td>
+          </tr>
+          <!-- ── Computed outputs sub-header ── -->
+          <tr><td colspan="4" class="heloc-sub-hdr">Computed Results</td></tr>
+          <!-- ── Outputs row 1 ── -->
+          <tr>
+            <td class="hl">Effective Rate</td>
+            <td class="heloc-out" id="heloc-effective-rate">—</td>
+            <td class="hl">Available Credit</td>
+            <td class="heloc-out" id="heloc-available"
+              style="color:#145220;">—</td>
+          </tr>
+          <!-- ── Outputs row 2 ── -->
+          <tr>
+            <td class="hl">IO Payment / mo</td>
+            <td class="heloc-out" id="heloc-io-payment">—</td>
+            <td class="hl">Repayment Pmt / mo</td>
+            <td class="heloc-out" id="heloc-repay-payment">—</td>
+          </tr>
+          <!-- ── Outputs row 3 ── -->
+          <tr>
+            <td class="hl">Utilization %</td>
+            <td class="heloc-out" id="heloc-utilization">—</td>
+            <td class="hl">Per Diem (drawn)</td>
+            <td class="heloc-out" id="heloc-per-diem">—</td>
+          </tr>
+        </table>
+      </div><!-- /heloc-fields -->
+
+      <!-- ── INTEREST-ONLY FIELDS (shown when Loan Type = Interest Only) ── -->
+      <div id="io-fields" style="display:none;border-top:2px solid var(--bm);">
+        <div style="background:linear-gradient(180deg,#005A3A,#004A2A);color:#FFF;
+                    font-size:11px;font-weight:bold;padding:3px 10px;
+                    letter-spacing:.05em;text-transform:uppercase;">
+          Interest-Only Parameters
+        </div>
+        <table class="io-tbl">
+          <tr>
+            <td class="hl">IO Period (months)</td>
+            <td class="hv"><input type="number" id="io-period-months"
+              value="60" min="1" step="1"
+              title="Interest-only period in months before full amortization begins"></td>
+            <td class="hl">IO Payment / mo</td>
+            <td class="io-out" id="io-payment">—</td>
+          </tr>
+          <tr>
+            <td class="hl">Post-IO P/I / mo</td>
+            <td class="io-out" id="io-post-payment">—</td>
+            <td class="hl">Payment Increase</td>
+            <td class="io-out" id="io-payment-jump"
+              style="color:#880000;">—</td>
+          </tr>
+        </table>
+      </div><!-- /io-fields -->
+
     </div><!-- /terms panel -->
 
     <!-- ── BALANCES PANEL ── -->
@@ -1800,6 +1985,24 @@ button,input,select,textarea{font-family:Arial,sans-serif;font-size:12px;color:v
     </div><!-- /fp-prop-body -->
     </div><!-- /prop-info-body collapsible -->
   </div><!-- /fp-prop-section -->
+  <!-- ══ ACTIVITY LOG / NOTES ══ -->
+  <div class="fp-notes-panel" id="fp-notes-panel">
+    <div class="fp-panel-hdr" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding-right:10px;">
+      <span>Activity Log &amp; Notes</span>
+      <span id="fp-notes-count" style="font-size:9px;font-weight:normal;opacity:.8;"></span>
+    </div>
+    <div class="fp-notes-body">
+      <div class="fp-notes-compose">
+        <textarea class="fp-notes-input" id="fp-note-input" placeholder="Add a note… (Ctrl+Enter to save)" onkeydown="if(event.ctrlKey&&event.key==='Enter'){event.preventDefault();fpNoteAdd();}"></textarea>
+        <button class="fp-notes-add-btn" onclick="fpNoteAdd()">Add<br>Note</button>
+      </div>
+      <div class="fp-notes-list" id="fp-notes-list">
+        <div class="fp-notes-empty" id="fp-notes-empty">No notes yet. Notes are saved when you click Add Note.</div>
+      </div>
+      <div class="fp-notes-offline" id="fp-notes-offline" style="display:none;">⚠ Offline — notes will save to the server when reconnected.</div>
+    </div>
+  </div>
+
   <!-- ══ INFO / STATUS STRIP — moved below Property Info ══ -->
   <div class="fp-status-strip" id="fp-status-strip">
     <div class="fp-panel-hdr" style="width:100%;">Loan Status &amp; Controls</div>
@@ -4501,10 +4704,505 @@ function _calcPropSummary(){
   }
 });
 
+
+/* ══════════════════════════════════════════════════════════════
+   DEMO SAVE / LOAD — localStorage-backed, fully self-contained
+   ══════════════════════════════════════════════════════════════ */
+const _DEMO_DOLLAR = new Set([
+  'mc-principal','mc-acquired-amount','mc-late','mc-annual-fee','mc-balloon-amount',
+  'bal-arrears','bal-int-bal','bal-interim','bal-late-fee-balance','bal-last-paid-amount',
+  'bal-advance-balance','bal-retainer','mc-suspense','bal-charge-off','mc-balance',
+  'bal-mia','bal-accrued-cost','bal-deferred-balance','bal-impound',
+  'sc-adv-tax','sc-adv-ins','sc-adv-prop','sc-adv-hoa','sc-adv-legal','sc-adv-title',
+  'sc-adv-bpo','sc-adv-nsf','sc-adv-svcfee','sc-adv-other','sc-adv-recovered',
+  'mod-upb','mod-deferred-bal','mod-principal-reduction',
+]);
+let _demoCurrentId=null;
+function _demoId(){ return 'WN'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,5).toUpperCase(); }
+function _demoPort(){ try{return JSON.parse(localStorage.getItem('wnb_demo_portfolio')||'[]');}catch(e){return[];} }
+function _saveDemoPort(a){ try{localStorage.setItem('wnb_demo_portfolio',JSON.stringify(a));}catch(e){} }
+function _demoCollect(){
+  const d={};
+  document.querySelectorAll('input[id],select[id],textarea[id]').forEach(el=>{
+    if(!el.id||el.id==='amort-jump') return;
+    d[el.id]=el.type==='checkbox'?el.checked:(el.value||'');
+  });
+  return d;
+}
+function _demoPopulate(data){
+  Object.keys(data).forEach(id=>{
+    const el=gv(id); if(!el) return;
+    if(el.type==='checkbox'){ el.checked=!!data[id]; return; }
+    el.value=data[id];
+    if(_DEMO_DOLLAR.has(id)&&el.value&&el.value!=='0.00'){
+      const n=parseFloat((el.value||'').replace(/[$,]/g,''));
+      if(!isNaN(n)) el.value=n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+  });
+  if(typeof _syncBorrowerName==='function') _syncBorrowerName();
+  if(typeof _syncCoBorrowerName==='function') _syncCoBorrowerName();
+  if(typeof _syncPropertyAddress==='function') _syncPropertyAddress();
+}
+function _demoSummary(id,data){
+  const name=[data['brow-first'],data['brow-mi'],data['brow-last']].filter(Boolean).join(' ')||'—';
+  return {id,lnum:data['mc-loan-number']||id,name,
+    upb:parseFloat((data['mc-balance']||'0').replace(/[$,]/g,''))||0,
+    rate:parseFloat(data['mc-rate'])||0,
+    missed:parseInt(data['mc-missed'])||0,
+    addr:[data['prop-street'],data['prop-city'],data['prop-state']].filter(Boolean).join(', ')||'',
+    saved:new Date().toISOString()};
+}
+function _demoSetLabel(msg,ok){
+  const el=gv('acct-bridge-label'); if(!el) return;
+  el.textContent=msg; el.style.background=ok?'#1A5C2A':'#7A3A00'; el.style.color='#FFF';
+  if(ok) setTimeout(()=>{el.textContent='Unsaved';el.style.background='#7A3A00';},2500);
+}
+document.addEventListener('input',()=>{
+  const el=gv('acct-bridge-label');
+  if(el&&_demoCurrentId){el.textContent='Unsaved';el.style.background='#7A3A00';}
+});
+function demoSave(){
+  const data=_demoCollect();
+  const id=_demoCurrentId||_demoId();
+  _demoCurrentId=id;
+  try{ localStorage.setItem('wnb_demo_loan_'+id,JSON.stringify(data)); }
+  catch(e){ alert('Browser storage full.'); return; }
+  const port=_demoPort();
+  const s=_demoSummary(id,data);
+  const idx=port.findIndex(r=>r.id===id);
+  if(idx>=0) port[idx]=s; else port.unshift(s);
+  _saveDemoPort(port);
+  _demoSetLabel('Saved ✓',true);
+}
+function demoNew(){
+  if(_demoCurrentId){
+    if(confirm('Save current loan first?')) demoSave();
+    else if(!confirm('Discard changes?')) return;
+  }
+  _demoCurrentId=null;
+  document.querySelectorAll('input[id],select[id],textarea[id]').forEach(el=>{
+    if(!el.id||el.id==='amort-jump') return;
+    if(el.type==='checkbox') el.checked=false;
+    else if(_DEMO_DOLLAR.has(el.id)) el.value='0.00';
+    else el.value='';
+  });
+  ['terms-pi-payment','bal-run-upb','bal-payoff-display',
+   'bal-per-diem-display','bal-red-payoff'].forEach(id=>sv(id,'—'));
+  if(typeof calculate==='function') calculate();
+  _demoSetLabel('New Loan',false);
+}
+function demoLoadLoan(id){
+  try{
+    const raw=localStorage.getItem('wnb_demo_loan_'+id);
+    if(!raw){alert('Loan not found.');return;}
+    _demoCurrentId=id;
+    _demoPopulate(JSON.parse(raw));
+    setTimeout(()=>{
+      if(typeof calculate==='function') calculate();
+      if(typeof calcReinstatement==='function') calcReinstatement();
+      if(typeof initDollarFields==='function') initDollarFields();
+      if(typeof _calcPropSummary==='function') _calcPropSummary();
+    },150);
+    _demoSetLabel('Loaded ✓',false);
+    if(typeof showTab==='function') showTab('payment');
+    const m=document.getElementById('_demoPortModal'); if(m) m.remove();
+  }catch(e){ alert('Error loading: '+e.message); }
+}
+function demoDeleteLoan(id){
+  if(!confirm('Delete this loan permanently?')) return;
+  try{ localStorage.removeItem('wnb_demo_loan_'+id); }catch(e){}
+  _saveDemoPort(_demoPort().filter(r=>r.id!==id));
+  if(_demoCurrentId===id){ _demoCurrentId=null; }
+  demoPortfolio();
+}
+function demoPortfolio(){
+  const port=_demoPort();
+  const old=document.getElementById('_demoPortModal'); if(old) old.remove();
+  const fmt=v=>v>0?'$'+Math.round(v).toLocaleString('en-US'):'—';
+  const fmtD=s=>s?new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+  const sc=m=>m>=4?'#880000':m>0?'#7A4800':'#145220';
+  const rows=port.length?port.map(l=>`
+    <tr onclick="demoLoadLoan('${l.id}')" style="cursor:pointer;border-bottom:1px solid #E8EEF6;"
+        onmouseover="this.style.background='#EBF2FF'" onmouseout="this.style.background=''">
+      <td style="padding:8px 12px;font-family:Courier New,monospace;font-weight:bold;color:#1A3070;">${l.lnum||'—'}</td>
+      <td style="padding:8px 12px;font-weight:bold;">${l.name||'—'}</td>
+      <td style="padding:8px 12px;font-size:11px;color:#6677AA;">${l.addr||'—'}</td>
+      <td style="padding:8px 12px;font-family:Courier New,monospace;">${fmt(l.upb)}</td>
+      <td style="padding:8px 12px;font-family:Courier New,monospace;">${l.rate?l.rate.toFixed(3)+'%':'—'}</td>
+      <td style="padding:8px 12px;font-family:Courier New,monospace;font-weight:bold;color:${sc(l.missed||0)};">${l.missed||0}</td>
+      <td style="padding:8px 12px;font-size:11px;color:#6677AA;">${fmtD(l.saved)}</td>
+      <td style="padding:8px 12px;">
+        <button onclick="event.stopPropagation();demoDeleteLoan('${l.id}')"
+          style="border:1px solid #FFAAAA;background:#FFF8F8;color:#880000;
+                 padding:2px 8px;border-radius:3px;cursor:pointer;font-size:11px;">Del</button>
+      </td>
+    </tr>`).join('')
+    :`<tr><td colspan="8" style="padding:40px;text-align:center;color:#6677AA;">
+        No saved loans yet. Fill in a loan and click <b>Save Loan</b>.
+      </td></tr>`;
+
+  const m=document.createElement('div');
+  m.id='_demoPortModal';
+  m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  m.innerHTML=`
+    <div style="background:#FFF;border-radius:8px;width:92%;max-width:950px;
+                max-height:82vh;display:flex;flex-direction:column;
+                box-shadow:0 8px 40px rgba(0,0,0,.3);overflow:hidden;">
+      <div style="background:#1A3070;color:#FFF;padding:12px 18px;
+                  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <span style="font-size:14px;font-weight:bold;">
+          &#128196; Loan Portfolio &nbsp;
+          <span style="font-size:11px;opacity:.6;">${port.length} loan${port.length!==1?'s':''}</span>
+        </span>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button onclick="demoNew();document.getElementById('_demoPortModal').remove()"
+            style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);
+                   color:#FFF;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:12px;">
+            &#10133; New Loan
+          </button>
+          <button onclick="document.getElementById('_demoPortModal').remove()"
+            style="background:rgba(255,255,255,.15);border:none;color:#FFF;
+                   border-radius:4px;padding:4px 12px;cursor:pointer;font-size:13px;">&times; Close</button>
+        </div>
+      </div>
+      <div style="overflow-y:auto;flex:1;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead style="position:sticky;top:0;">
+            <tr style="background:#F0F4F8;border-bottom:2px solid #C8DCFF;">
+              ${['Loan #','Borrower','Property','UPB','Rate','Missed','Last Saved','']
+                .map(h=>`<th style="padding:7px 12px;text-align:left;font-size:10px;
+                  font-weight:bold;color:#6677AA;text-transform:uppercase;
+                  letter-spacing:.05em;white-space:nowrap;">${h}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div style="padding:8px 16px;border-top:1px solid #D0D8E8;font-size:10px;
+                  color:#6677AA;text-align:center;flex-shrink:0;">
+        Data stored in this browser — click any row to open a loan
+      </div>
+    </div>`;
+  document.body.appendChild(m);
+  m.addEventListener('click',e=>{if(e.target===m)m.remove();});
+}
+// Auto-save every 90s
+setInterval(()=>{if(_demoCurrentId)demoSave();},90000);
+// URL ?loan= handler
+(function(){const p=new URLSearchParams(window.location.search);const lid=p.get('loan');if(lid)setTimeout(()=>demoLoadLoan(lid),350);})();
+
+/* ══════════════════════════════════════════════════════════════
+   HELOC & INTEREST-ONLY CALCULATION ENGINE
+   ══════════════════════════════════════════════════════════════
+
+   HELOC Structure:
+   ┌─────────────────────────────────┬───────────────────────────────┐
+   │  DRAW PERIOD (typically 10yr)   │  REPAYMENT PERIOD (typ. 20yr) │
+   │  Interest-only on drawn amount  │  Fully amortizing P&I          │
+   │  Rate = Prime + Margin          │  Rate = Prime + Margin         │
+   │  Balance can increase/decrease  │  Balance only decreases        │
+   └─────────────────────────────────┴───────────────────────────────┘
+
+   Key rates:
+     Effective Rate = MAX(floor, MIN(ceiling, prime + margin))
+     IO Payment     = drawn_balance × effective_rate / 12
+     Repay Payment  = calcBase(drawn_balance, effective_rate, repay_months)
+*/
+
+function calcHELOC(){
+  const loanType = gv('mc-loan-type')?.value || '';
+  if(loanType !== 'HELOC') return;
+
+  // Read inputs
+  const creditLimit    = parseDollar('heloc-credit-limit');
+  const drawn          = parseDollar('heloc-drawn');
+  const prime          = parseFloat(gv('heloc-prime')?.value)  || 8.5;
+  const margin         = parseFloat(gv('heloc-margin')?.value) || 1.5;
+  const floor_rate     = parseFloat(gv('heloc-floor')?.value)  || 3.0;
+  const ceiling_rate   = parseFloat(gv('heloc-ceiling')?.value)|| 18.0;
+  const drawMonths     = parseInt(gv('heloc-draw-months')?.value)  || 120;
+  const repayMonths    = parseInt(gv('heloc-repay-months')?.value) || 240;
+  const elapsed        = parseInt(gv('heloc-months-elapsed')?.value)|| 0;
+
+  // ── Effective rate: Prime + Margin, clamped by floor and ceiling ──
+  const rawRate     = prime + margin;
+  const effectiveR  = Math.max(floor_rate, Math.min(ceiling_rate, rawRate));
+  const effectiveD  = effectiveR / 100;  // as decimal
+
+  // ── Determine current phase ────────────────────────────────────────
+  const inDrawPeriod = elapsed < drawMonths;
+  const phase        = inDrawPeriod
+    ? `Draw Period (Mo ${elapsed+1} of ${drawMonths})`
+    : `Repayment (Mo ${elapsed-drawMonths+1} of ${repayMonths})`;
+
+  // ── Interest-Only Payment (draw period) ───────────────────────────
+  //   IO Pmt = Balance × (Rate / 12)
+  //   The drawn balance changes monthly as the borrower draws or repays.
+  const ioPayment = drawn > 0 ? r2(drawn * effectiveD / 12) : 0;
+
+  // ── Repayment Payment (after draw period ends) ────────────────────
+  //   Balance at end of draw period amortizes over repayment period.
+  //   Uses the same calcBase() as a standard fixed-rate mortgage.
+  const repayPayment = drawn > 0 ? calcBase(drawn, effectiveD, repayMonths) : 0;
+
+  // ── Available credit ───────────────────────────────────────────────
+  const available = creditLimit > 0 ? r2(Math.max(0, creditLimit - drawn)) : 0;
+
+  // ── Utilization ────────────────────────────────────────────────────
+  const utilization = creditLimit > 0
+    ? (drawn / creditLimit * 100).toFixed(1) + '%'
+    : '—';
+
+  // ── Per diem on HELOC balance ──────────────────────────────────────
+  const helocPD = drawn > 0 ? r4(drawn * effectiveD / DAYS_IN_YEAR) : 0;
+
+  // ── Write outputs ──────────────────────────────────────────────────
+  sv('heloc-phase',          phase);
+  sv('heloc-effective-rate', effectiveR.toFixed(3) + '%'
+    + (rawRate !== effectiveR
+      ? ' (' + (rawRate < floor_rate ? 'floor' : 'ceiling') + ')'
+      : ' (Prime+Margin)'));
+  sv('heloc-available',      available > 0 ? fmt(available) : '—');
+  sv('heloc-io-payment',     ioPayment > 0  ? fmt(ioPayment)  : '—');
+  sv('heloc-repay-payment',  repayPayment > 0 ? fmt(repayPayment) : '—');
+  sv('heloc-utilization',    utilization);
+  sv('heloc-per-diem',       helocPD > 0 ? '$' + helocPD.toFixed(4) + '/day' : '—');
+
+  // ── Sync drawn balance → UPB field so payoff/per diem also update ──
+  if(drawn > 0){
+    const balEl = gv('mc-balance');
+    if(balEl && parseDollar('mc-balance') !== drawn){
+      balEl.value = drawn.toLocaleString('en-US',
+        {minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+    const rateEl = gv('mc-rate');
+    if(rateEl) rateEl.value = effectiveR.toFixed(3);
+  }
+
+  // ── Store in lastCalcState for letters/documents ───────────────────
+  lastCalcState.helocCreditLimit    = creditLimit;
+  lastCalcState.helocDrawn          = drawn;
+  lastCalcState.helocEffectiveRate  = effectiveR;
+  lastCalcState.helocIOPayment      = ioPayment;
+  lastCalcState.helocRepayPayment   = repayPayment;
+  lastCalcState.helocAvailable      = available;
+  lastCalcState.helocPhase          = phase;
+  lastCalcState.helocPrimeRate      = prime;
+  lastCalcState.helocMargin         = margin;
+  lastCalcState.inDrawPeriod        = inDrawPeriod;
+}
+
+/* ── INTEREST-ONLY LOAN CALCULATION ──────────────────────────────────
+   For non-HELOC interest-only loans:
+   - During IO period: payment = Principal × Rate / 12
+   - After IO period: calcBase() on full original principal
+     over (AmTerm - IO period) remaining months
+   - "Payment shock" = percentage increase when IO period ends
+*/
+function calcInterestOnly(){
+  const loanType = gv('mc-loan-type')?.value || '';
+  if(loanType !== 'Interest Only') return;
+
+  const P        = parseDollar('mc-principal');
+  const rPct     = parseFloat(gv('mc-rate')?.value) || 0;
+  const n        = parseInt(gv('mc-term')?.value)   || 0;
+  const ioPeriod = parseInt(gv('io-period-months')?.value) || 60;
+
+  if(!P || !rPct || !n) return;
+
+  const r = rPct / 100;
+
+  // IO payment: pure interest, no principal reduction
+  const ioPayment = r2(P * r / 12);
+
+  // Post-IO payment: full amortization of original principal
+  // over remaining months (total term minus IO period)
+  const remainingMonths = Math.max(1, n - ioPeriod);
+  const postIOPayment   = calcBase(P, r, remainingMonths);
+
+  // Payment shock: how much bigger the payment gets
+  const jumpAmt = r2(postIOPayment - ioPayment);
+  const jumpPct = ioPayment > 0
+    ? ((jumpAmt / ioPayment) * 100).toFixed(1) + '%'
+    : '—';
+
+  sv('io-payment',      ioPayment > 0    ? fmt(ioPayment)    : '—');
+  sv('io-post-payment', postIOPayment > 0 ? fmt(postIOPayment): '—');
+  sv('io-payment-jump', jumpAmt > 0
+    ? '+' + fmt(jumpAmt) + ' (+' + jumpPct + ')'
+    : '—');
+
+  lastCalcState.ioPayment     = ioPayment;
+  lastCalcState.ioPostPayment = postIOPayment;
+  lastCalcState.ioJumpAmt     = jumpAmt;
+}
+
+/* ── LOAN TYPE VISIBILITY HANDLER ────────────────────────────────────
+   Shows/hides the appropriate parameter panels when loan type changes
+*/
+function _onLoanTypeChange(){
+  const loanType = gv('mc-loan-type')?.value || '';
+  const helocEl  = document.getElementById('heloc-fields');
+  const ioEl     = document.getElementById('io-fields');
+
+  if(helocEl) helocEl.style.display = loanType==='HELOC' ? '' : 'none';
+  if(ioEl)    ioEl.style.display    = loanType==='Interest Only' ? '' : 'none';
+
+  // Run the appropriate calculation
+  if(loanType === 'HELOC')          calcHELOC();
+  else if(loanType==='Interest Only') calcInterestOnly();
+}
+
+/* ── Wire HELOC and IO fields to auto-recalculate ────────────────────*/
+(function wireHELOC(){
+  const helocIds = ['heloc-credit-limit','heloc-drawn','heloc-prime',
+    'heloc-margin','heloc-floor','heloc-ceiling',
+    'heloc-draw-months','heloc-repay-months','heloc-months-elapsed'];
+  const ioIds = ['io-period-months','mc-principal','mc-rate','mc-term'];
+  helocIds.forEach(id=>{
+    const el=gv(id); if(!el) return;
+    el.addEventListener('input',  calcHELOC);
+    el.addEventListener('change', calcHELOC);
+  });
+  ioIds.forEach(id=>{
+    const el=gv(id); if(!el) return;
+    el.addEventListener('input',  calcInterestOnly);
+    el.addEventListener('change', calcInterestOnly);
+  });
+  // Also add to initDollarFields targets
+  ['heloc-credit-limit','heloc-drawn'].forEach(id=>{
+    const el=gv(id);
+    if(el){ el.addEventListener('blur', calcHELOC); }
+  });
+})();
+
+/* ── Hook HELOC/IO into the main calculate() cycle ───────────────────*/
+const _origCalculate = typeof calculate === 'function' ? calculate : null;
+// Extend _navUpdatePills call to also run HELOC
+const _existingNavPills = typeof _navUpdatePills === 'function' ? _navUpdatePills : null;
+// Patch: after main calculate runs, also run HELOC/IO
+document.addEventListener('input', function(){
+  const lt = gv('mc-loan-type')?.value||'';
+  if(lt==='HELOC') setTimeout(calcHELOC, 90);
+  else if(lt==='Interest Only') setTimeout(calcInterestOnly, 90);
+});
+
+/* ══════════════════════════════════════
+   ACTIVITY LOG / NOTES
+   ══════════════════════════════════════ */
+
+// In-memory store for offline mode
+let _noteCache = [];
+
+function fpNotesRender(notes) {
+  _noteCache = notes || [];
+  const list  = document.getElementById('fp-notes-list');
+  const empty = document.getElementById('fp-notes-empty');
+  const count = document.getElementById('fp-notes-count');
+  if (!list) return;
+
+  // Remove old entries but keep the empty placeholder
+  list.querySelectorAll('.fp-note-entry').forEach(el => el.remove());
+
+  if (count) count.textContent = notes.length ? `${notes.length} note${notes.length===1?'':'s'}` : '';
+  if (empty) empty.style.display = notes.length ? 'none' : '';
+
+  notes.forEach(n => {
+    const div = document.createElement('div');
+    const isSystem = n.event_type && n.event_type !== 'note';
+    div.className = 'fp-note-entry' + (isSystem ? ' fp-note-system' : '');
+    const ts = n.performed_at ? new Date(n.performed_at).toLocaleString() : '';
+    const who = n.performed_by_label || 'Servicer';
+    div.innerHTML =
+      `<div class="fp-note-meta">` +
+        `<span>${who}${ts ? ' &nbsp;&middot;&nbsp; ' + ts : ''}</span>` +
+        (!isSystem ? `<span class="fp-note-del" title="Delete note" onclick="fpNoteDelete('${n.id}')">&#10005;</span>` : '') +
+      `</div>` +
+      `<div class="fp-note-text">${(n.description||'').replace(/</g,'&lt;')}</div>`;
+    list.appendChild(div);
+  });
+}
+
+async function fpNotesLoad(accountId) {
+  if (!accountId) { fpNotesRender([]); return; }
+  try {
+    const resp = await fetch(`/api/accounts/${accountId}/events`);
+    if (!resp.ok) throw new Error(resp.status);
+    const data = await resp.json();
+    fpNotesRender(data.events || []);
+    const off = document.getElementById('fp-notes-offline');
+    if (off) off.style.display = 'none';
+  } catch(e) {
+    console.warn('[notes] load failed', e);
+    fpNotesRender(_noteCache);
+    const off = document.getElementById('fp-notes-offline');
+    if (off) off.style.display = '';
+  }
+}
+
+async function fpNoteAdd() {
+  const input = document.getElementById('fp-note-input');
+  if (!input) return;
+  const text = (input.value || '').trim();
+  if (!text) return;
+
+  // Get current loan id from bridge
+  const accountId = window._bridgeCurrentId ? window._bridgeCurrentId() : null;
+  if (!accountId) {
+    alert('Please save the loan first before adding notes.');
+    return;
+  }
+
+  input.disabled = true;
+  try {
+    const resp = await fetch(`/api/accounts/${accountId}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ description: text, performed_by_label: 'Servicer' }),
+    });
+    if (!resp.ok) throw new Error(resp.status);
+    input.value = '';
+    await fpNotesLoad(accountId);
+  } catch(e) {
+    console.warn('[notes] save failed — storing locally', e);
+    // Offline fallback: show locally
+    _noteCache.unshift({ id: 'local-'+Date.now(), event_type:'note',
+      description: text, performed_by_label:'Servicer', performed_at: new Date().toISOString() });
+    fpNotesRender(_noteCache);
+    input.value = '';
+    const off = document.getElementById('fp-notes-offline');
+    if (off) off.style.display = '';
+  } finally {
+    input.disabled = false;
+    input.focus();
+  }
+}
+
+async function fpNoteDelete(eventId) {
+  if (eventId.startsWith('local-')) {
+    _noteCache = _noteCache.filter(n => n.id !== eventId);
+    fpNotesRender(_noteCache);
+    return;
+  }
+  const accountId = window._bridgeCurrentId ? window._bridgeCurrentId() : null;
+  if (!accountId) return;
+  if (!confirm('Delete this note?')) return;
+  try {
+    await fetch(`/api/accounts/${accountId}/events/${eventId}`, { method: 'DELETE' });
+    await fpNotesLoad(accountId);
+  } catch(e) {
+    console.warn('[notes] delete failed', e);
+  }
+}
+
+// Expose loader so account-bridge can call it after load/new
+window.fpNotesLoad  = fpNotesLoad;
+window.fpNotesRender = fpNotesRender;
+
 </script>
 
-<!-- account-bridge.js: backend save/load connector -->
-<!-- Load AFTER the face page's own script so all functions exist -->
-<script src="/account-bridge.js"></script>
+<!-- Account Bridge: connects to Express/Supabase API.
+     Remove the demo localStorage functions below if using the bridge in production. -->
+<script src="account-bridge.js"></script>
 </body>
 </html>
