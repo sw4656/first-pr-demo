@@ -180,6 +180,8 @@
       _populate(data.fields);
       _setLabel('Loaded ✓', '#1A5C2A');
       setTimeout(() => _setLabel('Saved', '#1A5C2A'), 2000);
+      // Load notes/activity log for this loan
+      if (typeof window.fpNotesLoad === 'function') window.fpNotesLoad(id);
     } catch (err) {
       // Try localStorage backup
       const backup = localStorage.getItem('wnb_backup_' + id)
@@ -229,6 +231,8 @@
     if (srvBorrower) srvBorrower.textContent = '—';
     const svcBorrowerDisplay = document.getElementById('svc-borrower-display');
     if (svcBorrowerDisplay) svcBorrowerDisplay.textContent = '—';
+    // Clear notes panel
+    if (typeof window.fpNotesRender === 'function') window.fpNotesRender([]);
     // Clear loan= from URL
     const url = new URL(window.location.href);
     url.searchParams.delete('loan');
@@ -390,11 +394,12 @@
   setInterval(_checkHealth, 60000);
 
   // ── EXPOSE TO WINDOW ──────────────────────────────────────────────
-  window.acctBridgeSave  = acctBridgeSave;
-  window.acctBridgeNew   = acctBridgeNew;
-  window.acctBridgeOpen  = acctBridgeOpen;
-  window.acctBridgeLoad  = acctBridgeLoad;
-  window._bridgeLoadId   = id => { acctBridgeLoad(id); document.getElementById('_bridgePortModal')?.remove(); };
+  window.acctBridgeSave    = acctBridgeSave;
+  window.acctBridgeNew     = acctBridgeNew;
+  window.acctBridgeOpen    = acctBridgeOpen;
+  window.acctBridgeLoad    = acctBridgeLoad;
+  window._bridgeLoadId     = id => { acctBridgeLoad(id); document.getElementById('_bridgePortModal')?.remove(); };
+  window._bridgeCurrentId  = () => _currentId;
 
   console.log('[bridge] WebNote Account Bridge loaded — API:', API_BASE);
 
