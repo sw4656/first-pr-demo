@@ -1,1 +1,661 @@
-<meta http-equiv="refresh" content="0; url=/calculator.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMH II — Loan Portfolio</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bd:#1F3A6E;--bm:#2D5FA6;--bb:#4A7CC7;--bl:#D6E4F7;--bp:#EBF2FC;
+  --g10:#F4F6F8;--g20:#E8ECF0;--g30:#D0D8E0;--g40:#B0BCCC;--g60:#6B7C93;--g80:#3A4A5C;--g90:#1E2A38;
+  --hi:#FFF;--lo:#8899AA;
+  --red:#990000;--redbg:#FDECEA;--grn:#1A5C2A;--grnbg:#E6F4EA;--amb:#7A4800;--ambbg:#FEF3DC;
+  --gold:#C8922A;
+}
+body{font-family:Arial,Helvetica,sans-serif;font-size:12px;background:var(--g20);color:var(--g90);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* ── TITLE BAR ── */
+.title-bar{height:20px;background:linear-gradient(180deg,var(--bm),var(--bd));display:flex;align-items:center;gap:6px;padding:0 8px;flex-shrink:0;border-bottom:1px solid #162D56;user-select:none}
+.tb-logo{width:16px;height:16px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:9px;color:#FFF;font-weight:bold}
+.tb-title{flex:1;font-size:11px;font-weight:bold;color:#FFF}
+.tb-clock{font-size:10px;color:#A8C4E8;font-family:'Courier New',monospace}
+
+/* ── BANNER ── */
+.banner{background:var(--bd);border-bottom:3px solid var(--bm);display:flex;align-items:stretch;flex-shrink:0}
+.banner-main{padding:6px 16px;display:flex;align-items:center;gap:12px;flex:1}
+.banner-icon{width:36px;height:36px;background:var(--bm);border:1px solid var(--bb);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.banner-name{font-size:16px;font-weight:bold;color:#FFF;line-height:1.2}
+.banner-sub{font-size:9px;color:#A8C4E8;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.banner-right{background:#162D56;padding:5px 16px;display:flex;align-items:center;gap:16px;border-left:1px solid #2A4A80;flex-shrink:0}
+.stat-tile{display:flex;flex-direction:column;align-items:center;min-width:64px}
+.stat-tile .lbl{font-size:8px;color:#6888AA;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.stat-tile .val{font-size:14px;font-weight:bold;color:#CCE0FF;font-family:'Courier New',monospace;line-height:1.3}
+.stat-tile .val.red{color:#FF8888}
+.stat-tile .val.amb{color:#FFCC66}
+.stat-tile .val.grn{color:#66DD88}
+.stat-sep{width:1px;height:28px;background:#2A4A80}
+
+/* ── TOOLBAR ── */
+.toolbar{background:var(--g10);border-bottom:2px solid var(--g30);padding:2px 8px;display:flex;align-items:center;gap:3px;flex-shrink:0}
+.tbtn{height:22px;padding:0 10px;background:linear-gradient(180deg,#FAFBFC,#DDE4EC);border-top:1px solid var(--hi);border-left:1px solid var(--hi);border-right:1px solid var(--lo);border-bottom:1px solid var(--lo);display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap;cursor:pointer;color:var(--g80)}
+.tbtn:hover{background:linear-gradient(180deg,var(--bl),#BDD4EE);border-color:var(--bm);color:var(--bd)}
+.tbtn.primary{background:linear-gradient(180deg,#3A6EC0,var(--bd));color:#FFF;border-color:var(--bd)}
+.tbtn.primary:hover{background:linear-gradient(180deg,#4A7ED0,var(--bm));border-color:var(--bb)}
+.tsep{width:1px;height:16px;border-left:1px solid var(--g40);border-right:1px solid var(--hi);margin:0 4px}
+.toolbar-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+
+/* ── SEARCH / FILTER BAR ── */
+.filter-bar{background:var(--g20);border-bottom:1px solid var(--g30);padding:4px 10px;display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:180px;max-width:320px}
+.search-wrap svg{position:absolute;left:7px;top:50%;transform:translateY(-50%);pointer-events:none;opacity:.45}
+.search-inp{width:100%;height:22px;padding:0 8px 0 26px;border:1px solid var(--g40);border-top-color:var(--lo);background:#FFF;font-size:11px;outline:none;color:var(--g90)}
+.search-inp:focus{border:2px solid var(--bm)}
+.filter-sel{height:22px;padding:0 6px;border:1px solid var(--g40);border-top-color:var(--lo);background:#FFF;font-size:11px;outline:none;color:var(--g80);cursor:pointer}
+.filter-sel:focus{border:2px solid var(--bm)}
+.filter-lbl{font-size:10px;color:var(--g60);white-space:nowrap}
+.result-count{font-size:10px;color:var(--g60);margin-left:auto;white-space:nowrap}
+
+/* ── MAIN BODY ── */
+.body{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+
+/* ── TABLE ── */
+.table-wrap{flex:1;overflow-y:auto;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:780px}
+thead{position:sticky;top:0;z-index:10}
+thead tr{background:linear-gradient(180deg,#E0E8F4,var(--g20));border-bottom:2px solid var(--bd)}
+th{padding:5px 10px;text-align:left;font-size:10px;font-weight:bold;color:var(--g60);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;user-select:none;cursor:pointer;border-right:1px solid var(--g30)}
+th:last-child{border-right:none}
+th:hover{background:#C8D8EE;color:var(--bd)}
+th .sort-arrow{font-size:8px;opacity:.4;margin-left:3px}
+th.sorted .sort-arrow{opacity:1;color:var(--bd)}
+tbody tr{border-bottom:1px solid var(--g30);cursor:pointer;transition:background .08s}
+tbody tr:nth-child(even){background:#F0F4F8}
+tbody tr:nth-child(odd){background:#FFF}
+tbody tr:hover{background:var(--bp)!important;outline:1px solid var(--bm)}
+tbody tr.selected{background:#D6E8FF!important;outline:2px solid var(--bm)}
+td{padding:6px 10px;font-size:11px;vertical-align:middle;white-space:nowrap;border-right:1px solid var(--g30)}
+td:last-child{border-right:none}
+.td-mono{font-family:'Courier New',monospace;font-weight:bold}
+.td-loan{color:var(--bd);font-weight:bold;font-family:'Courier New',monospace;font-size:11px}
+.td-borrower{font-weight:bold;color:var(--g90)}
+.td-addr{color:var(--g60);font-size:10px;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.td-upb{font-family:'Courier New',monospace;text-align:right}
+.td-rate{font-family:'Courier New',monospace;text-align:right}
+.td-missed{text-align:center;font-weight:bold;font-family:'Courier New',monospace}
+.missed-0{color:var(--grn)}
+.missed-1,.missed-2,.missed-3{color:var(--amb)}
+.missed-hi{color:var(--red)}
+.td-dpd{text-align:right;font-family:'Courier New',monospace;font-size:10px;color:var(--g60)}
+.status-pill{display:inline-block;padding:1px 7px;border-radius:2px;font-size:9px;font-weight:bold;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.sp-active{background:var(--grnbg);color:var(--grn);border:1px solid #9DD0A8}
+.sp-fc{background:var(--redbg);color:var(--red);border:1px solid #E8AAAA}
+.sp-bkr{background:#FFF0CC;color:#7A5C00;border:1px solid #DDB844}
+.sp-other{background:var(--g20);color:var(--g60);border:1px solid var(--g40)}
+.td-updated{color:var(--g60);font-size:10px;text-align:right}
+.td-actions{text-align:center;width:70px}
+.open-btn{padding:1px 10px;background:linear-gradient(180deg,var(--bl),#B8D0EE);border:1px solid var(--bm);color:var(--bd);font-size:10px;font-weight:bold;cursor:pointer;white-space:nowrap}
+.open-btn:hover{background:linear-gradient(180deg,var(--bm),var(--bd));color:#FFF}
+
+/* ── EMPTY / LOADING ── */
+.state-row td{text-align:center;padding:60px 20px;color:var(--g60);font-size:12px}
+.spinner{display:inline-block;width:20px;height:20px;border:3px solid var(--g30);border-top-color:var(--bm);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── STATUS BAR ── */
+.statusbar{height:18px;background:var(--g20);border-top:1px solid var(--g30);display:flex;align-items:center;padding:0 10px;gap:12px;flex-shrink:0}
+.sb-seg{font-size:9px;color:var(--g60);display:flex;align-items:center;gap:4px;border-right:1px solid var(--g40);padding-right:12px}
+.sb-seg:last-child{border-right:none;margin-left:auto}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--g40)}
+.sb-dot.grn{background:#44BB66}
+.sb-dot.red{background:#CC3333}
+
+/* ── NEW LOAN MODAL ── */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center}
+.modal-backdrop.open{display:flex}
+.modal{background:#FFF;border:2px solid var(--bd);box-shadow:0 8px 40px rgba(0,0,0,.35);width:420px;max-width:95vw}
+.modal-hdr{background:var(--bd);color:#FFF;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:bold}
+.modal-close{background:none;border:none;color:#FFF;font-size:16px;cursor:pointer;line-height:1;padding:0 2px}
+.modal-close:hover{color:#FFD;background:rgba(255,255,255,.15)}
+.modal-body{padding:16px}
+.modal-row{display:flex;align-items:center;margin-bottom:10px;gap:8px}
+.modal-lbl{width:130px;font-size:10px;font-weight:bold;color:var(--bd);text-align:right;flex-shrink:0}
+.modal-inp{flex:1;height:22px;padding:0 6px;border:1px solid var(--g40);border-top-color:var(--lo);font-size:11px;outline:none}
+.modal-inp:focus{border:2px solid var(--bm)}
+.modal-footer{padding:10px 16px;border-top:1px solid var(--g30);display:flex;justify-content:flex-end;gap:8px}
+.modal-btn{height:24px;padding:0 16px;font-size:11px;cursor:pointer;border:1px solid var(--g40)}
+.modal-btn.ok{background:linear-gradient(180deg,#3A6EC0,var(--bd));color:#FFF;border-color:var(--bd);font-weight:bold}
+.modal-btn.ok:hover{background:linear-gradient(180deg,#4A7ED0,var(--bm))}
+.modal-btn.cancel{background:linear-gradient(180deg,#FAFBFC,#DDE4EC);color:var(--g80)}
+.modal-btn.cancel:hover{background:var(--g20)}
+.modal-err{color:var(--red);font-size:10px;padding:0 16px 10px;display:none}
+
+/* ── DELINQUENCY BUCKETS ── */
+.bucket-bar{background:#162D56;padding:4px 10px;display:flex;align-items:center;gap:0;flex-shrink:0;border-bottom:2px solid var(--bd);overflow-x:auto}
+.bucket{flex:1;min-width:80px;display:flex;flex-direction:column;align-items:center;padding:3px 6px;border-right:1px solid #2A4A80;cursor:pointer}
+.bucket:last-child{border-right:none}
+.bucket:hover{background:rgba(255,255,255,.07)}
+.bucket.active-filter{background:rgba(74,124,199,.35);border-radius:2px}
+.bucket-lbl{font-size:8px;color:#6888AA;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.bucket-val{font-size:16px;font-weight:bold;font-family:'Courier New',monospace;color:#CCE0FF;line-height:1.3}
+.bucket-upb{font-size:8px;color:#4A6A99;white-space:nowrap}
+.bucket-val.c0{color:#66DD88}
+.bucket-val.c1{color:#FFCC66}
+.bucket-val.c2{color:#FF8844}
+.bucket-val.c3{color:#FF4444}
+</style>
+</head>
+<body>
+
+<!-- TITLE BAR -->
+<div class="title-bar">
+  <div class="tb-logo">A</div>
+  <span class="tb-title">AMH II Loan Servicing — Portfolio</span>
+  <span class="tb-clock" id="clock"></span>
+</div>
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="banner-main">
+    <div class="banner-icon">🏦</div>
+    <div>
+      <div class="banner-name">Asset Management Holdings II, LLC</div>
+      <div class="banner-sub">Loan Servicing Platform · Portfolio View</div>
+    </div>
+  </div>
+  <div class="banner-right">
+    <div class="stat-tile">
+      <span class="lbl">Total Loans</span>
+      <span class="val" id="stat-total">—</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-tile">
+      <span class="lbl">Total UPB</span>
+      <span class="val" id="stat-upb">—</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-tile">
+      <span class="lbl">Current</span>
+      <span class="val grn" id="stat-current">—</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-tile">
+      <span class="lbl">Delinquent</span>
+      <span class="val amb" id="stat-del">—</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-tile">
+      <span class="lbl">90+ DPD</span>
+      <span class="val red" id="stat-90">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <button class="tbtn primary" onclick="openNewLoanModal()">&#10133; New Loan</button>
+  <div class="tsep"></div>
+  <button class="tbtn" onclick="loadPortfolio()">&#8635; Refresh</button>
+  <div class="toolbar-right">
+    <span style="font-size:10px;color:var(--g60)" id="last-refresh"></span>
+  </div>
+</div>
+
+<!-- DELINQUENCY BUCKET BAR -->
+<div class="bucket-bar" id="bucket-bar">
+  <div class="bucket" id="bkt-all" onclick="setBucketFilter('all')">
+    <span class="bucket-lbl">All Loans</span>
+    <span class="bucket-val c0" id="bkt-all-val">—</span>
+    <span class="bucket-upb" id="bkt-all-upb"></span>
+  </div>
+  <div class="bucket" id="bkt-current" onclick="setBucketFilter('current')">
+    <span class="bucket-lbl">Current (0 DPD)</span>
+    <span class="bucket-val c0" id="bkt-current-val">—</span>
+    <span class="bucket-upb" id="bkt-current-upb"></span>
+  </div>
+  <div class="bucket" id="bkt-1-29" onclick="setBucketFilter('1-29')">
+    <span class="bucket-lbl">1–29 DPD</span>
+    <span class="bucket-val c1" id="bkt-1-29-val">—</span>
+    <span class="bucket-upb" id="bkt-1-29-upb"></span>
+  </div>
+  <div class="bucket" id="bkt-30-59" onclick="setBucketFilter('30-59')">
+    <span class="bucket-lbl">30–59 DPD</span>
+    <span class="bucket-val c2" id="bkt-30-59-val">—</span>
+    <span class="bucket-upb" id="bkt-30-59-upb"></span>
+  </div>
+  <div class="bucket" id="bkt-60-89" onclick="setBucketFilter('60-89')">
+    <span class="bucket-lbl">60–89 DPD</span>
+    <span class="bucket-val c2" id="bkt-60-89-val">—</span>
+    <span class="bucket-upb" id="bkt-60-89-upb"></span>
+  </div>
+  <div class="bucket" id="bkt-90" onclick="setBucketFilter('90+')">
+    <span class="bucket-lbl">90+ DPD</span>
+    <span class="bucket-val c3" id="bkt-90-val">—</span>
+    <span class="bucket-upb" id="bkt-90-upb"></span>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="search-wrap">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="#6B7C93" stroke-width="1.5"/><line x1="10.5" y1="10.5" x2="14" y2="14" stroke="#6B7C93" stroke-width="1.5"/></svg>
+    <input class="search-inp" id="search-inp" type="text" placeholder="Search borrower or loan #…" oninput="applyFilters()">
+  </div>
+  <span class="filter-lbl">Status:</span>
+  <select class="filter-sel" id="filter-status" onchange="applyFilters()">
+    <option value="">All Statuses</option>
+    <option value="active">Active</option>
+    <option value="fc">Foreclosure</option>
+    <option value="bkr">Bankruptcy</option>
+    <option value="reo">REO</option>
+    <option value="paid">Paid Off</option>
+  </select>
+  <span class="filter-lbl">Investor:</span>
+  <select class="filter-sel" id="filter-investor" onchange="applyFilters()">
+    <option value="">All Investors</option>
+  </select>
+  <span class="result-count" id="result-count"></span>
+</div>
+
+<!-- BODY -->
+<div class="body">
+  <div class="table-wrap">
+    <table id="portfolio-table">
+      <thead>
+        <tr>
+          <th onclick="sortBy('loan_number')" data-col="loan_number">Loan # <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('borrower_name')" data-col="borrower_name">Borrower <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('property_address')" data-col="property_address">Property <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('investor_name')" data-col="investor_name">Investor <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('current_upb')" data-col="current_upb" style="text-align:right">UPB <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('annual_rate')" data-col="annual_rate" style="text-align:right">Rate <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('missed_payments')" data-col="missed_payments" style="text-align:center">Missed <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('days_past_due')" data-col="days_past_due" style="text-align:right">DPD <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('loan_status')" data-col="loan_status">Status <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('next_due_date')" data-col="next_due_date">Next Due <span class="sort-arrow">▲</span></th>
+          <th onclick="sortBy('updated_at')" data-col="updated_at" style="text-align:right">Updated <span class="sort-arrow">▲</span></th>
+          <th style="cursor:default">Open</th>
+        </tr>
+      </thead>
+      <tbody id="portfolio-body">
+        <tr class="state-row"><td colspan="12"><span class="spinner"></span>Loading portfolio…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="statusbar">
+  <div class="sb-seg"><div class="sb-dot" id="db-dot"></div><span id="db-status">Connecting…</span></div>
+  <div class="sb-seg">AMH II Loan Servicing BETA</div>
+  <div class="sb-seg" id="sb-user">Portfolio</div>
+</div>
+
+<!-- NEW LOAN MODAL -->
+<div class="modal-backdrop" id="new-loan-modal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span>&#10133; New Loan</span>
+      <button class="modal-close" onclick="closeNewLoanModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row">
+        <span class="modal-lbl">Loan Number *</span>
+        <input class="modal-inp" id="new-loan-number" placeholder="e.g. AMH-2024-001" maxlength="60">
+      </div>
+      <div class="modal-row">
+        <span class="modal-lbl">Borrower Name *</span>
+        <input class="modal-inp" id="new-borrower" placeholder="Last, First" maxlength="120">
+      </div>
+      <div class="modal-row">
+        <span class="modal-lbl">Investor</span>
+        <input class="modal-inp" id="new-investor" placeholder="Optional" maxlength="120">
+      </div>
+    </div>
+    <div class="modal-err" id="new-loan-err"></div>
+    <div class="modal-footer">
+      <button class="modal-btn cancel" onclick="closeNewLoanModal()">Cancel</button>
+      <button class="modal-btn ok" onclick="createNewLoan()">Create &amp; Open</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+const API = '/api';
+let _allLoans     = [];
+let _filtered     = [];
+let _sortCol      = 'days_past_due';
+let _sortDir      = -1;   // -1 = desc, 1 = asc
+let _bucketFilter = 'all';
+let _summary      = {};
+
+// ── CLOCK ────────────────────────────────────────────────────────────
+function tickClock() {
+  const el = document.getElementById('clock');
+  if (el) el.textContent = new Date().toLocaleString('en-US', {
+    weekday:'short', month:'short', day:'numeric',
+    hour:'numeric', minute:'2-digit', hour12:true
+  });
+}
+tickClock();
+setInterval(tickClock, 10000);
+
+// ── HELPERS ──────────────────────────────────────────────────────────
+function fmt$(v) {
+  const n = parseFloat(v) || 0;
+  if (n >= 1e6)  return '$' + (n/1e6).toFixed(2) + 'M';
+  if (n >= 1e3)  return '$' + Math.round(n).toLocaleString('en-US');
+  return '$' + n.toFixed(0);
+}
+function fmtDate(s) {
+  if (!s) return '—';
+  try {
+    const d = new Date(s);
+    return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+  } catch { return s; }
+}
+function statusPill(raw) {
+  const s = (raw || '').toLowerCase();
+  if (s.includes('active') || s === 'active')      return `<span class="status-pill sp-active">Active</span>`;
+  if (s.includes('fc') || s.includes('foreclos'))  return `<span class="status-pill sp-fc">Foreclosure</span>`;
+  if (s.includes('bkr') || s.includes('bankrupt')) return `<span class="status-pill sp-bkr">BKR</span>`;
+  if (s === 'reo')                                  return `<span class="status-pill sp-fc">REO</span>`;
+  if (s.includes('paid'))                           return `<span class="status-pill sp-other">Paid Off</span>`;
+  return `<span class="status-pill sp-other">${raw || '—'}</span>`;
+}
+function missedClass(n) {
+  if (!n || n === 0)  return 'missed-0';
+  if (n <= 3)         return 'missed-1';
+  return 'missed-hi';
+}
+
+// ── LOAD PORTFOLIO ────────────────────────────────────────────────────
+async function loadPortfolio() {
+  document.getElementById('portfolio-body').innerHTML =
+    `<tr class="state-row"><td colspan="12"><span class="spinner"></span>Loading portfolio…</td></tr>`;
+  try {
+    const [acctResp, sumResp] = await Promise.all([
+      fetch(API + '/accounts?limit=500'),
+      fetch(API + '/portfolio/summary'),
+    ]);
+    if (!acctResp.ok) throw new Error('HTTP ' + acctResp.status);
+    const acctData = await acctResp.json();
+    _allLoans = acctData.accounts || [];
+
+    // Update DB dot
+    document.getElementById('db-dot').className = 'sb-dot grn';
+    document.getElementById('db-status').textContent = 'Database connected';
+
+    // Summary stats
+    if (sumResp.ok) {
+      _summary = await sumResp.json();
+      updateSummaryBanner();
+    }
+
+    // Build investor filter
+    buildInvestorFilter();
+
+    // Refresh timestamp
+    document.getElementById('last-refresh').textContent =
+      'Refreshed ' + new Date().toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit', hour12:true });
+
+    applyFilters();
+  } catch (err) {
+    console.error('[portfolio]', err);
+    document.getElementById('db-dot').className = 'sb-dot red';
+    document.getElementById('db-status').textContent = 'Connection error';
+    document.getElementById('portfolio-body').innerHTML =
+      `<tr class="state-row"><td colspan="12">⚠ Could not reach server. <a href="#" onclick="loadPortfolio();return false" style="color:var(--bd)">Retry</a></td></tr>`;
+  }
+}
+
+// ── SUMMARY BANNER ────────────────────────────────────────────────────
+function updateSummaryBanner() {
+  const s  = _summary;
+  const total = parseInt(s.total_loans) || _allLoans.length;
+  const upb   = parseFloat(s.total_upb) || _allLoans.reduce((a,l)=>a+(parseFloat(l.current_upb)||0),0);
+  const cur   = parseInt(s.current_count) || 0;
+  const d1    = parseInt(s.dpd_1_29)  || 0;
+  const d30   = parseInt(s.dpd_30_59) || 0;
+  const d60   = parseInt(s.dpd_60_89) || 0;
+  const d90   = parseInt(s.dpd_90_plus)|| 0;
+  const del   = d1 + d30 + d60 + d90;
+
+  document.getElementById('stat-total').textContent   = total;
+  document.getElementById('stat-upb').textContent     = fmt$(upb);
+  document.getElementById('stat-current').textContent = cur;
+  document.getElementById('stat-del').textContent     = del;
+  document.getElementById('stat-90').textContent      = d90;
+
+  // Bucket bar counts
+  const bktUpb = (loans, dpd1, dpd2) =>
+    loans.filter(l => {
+      const d = parseInt(l.days_past_due)||0;
+      return d >= dpd1 && (dpd2 == null || d <= dpd2);
+    }).reduce((a,l)=>a+(parseFloat(l.current_upb)||0), 0);
+
+  document.getElementById('bkt-all-val').textContent     = total;
+  document.getElementById('bkt-all-upb').textContent     = fmt$(upb);
+  document.getElementById('bkt-current-val').textContent = cur;
+  document.getElementById('bkt-current-upb').textContent = fmt$(bktUpb(_allLoans,0,0));
+  document.getElementById('bkt-1-29-val').textContent    = d1;
+  document.getElementById('bkt-1-29-upb').textContent    = fmt$(bktUpb(_allLoans,1,29));
+  document.getElementById('bkt-30-59-val').textContent   = d30;
+  document.getElementById('bkt-30-59-upb').textContent   = fmt$(bktUpb(_allLoans,30,59));
+  document.getElementById('bkt-60-89-val').textContent   = d60;
+  document.getElementById('bkt-60-89-upb').textContent   = fmt$(bktUpb(_allLoans,60,89));
+  document.getElementById('bkt-90-val').textContent      = d90;
+  document.getElementById('bkt-90-upb').textContent      = fmt$(bktUpb(_allLoans,90,null));
+}
+
+// ── INVESTOR FILTER ───────────────────────────────────────────────────
+function buildInvestorFilter() {
+  const sel = document.getElementById('filter-investor');
+  const cur = sel.value;
+  const investors = [...new Set(_allLoans.map(l => l.investor_name).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">All Investors</option>' +
+    investors.map(i => `<option value="${i}"${i===cur?' selected':''}>${i}</option>`).join('');
+}
+
+// ── BUCKET FILTER ─────────────────────────────────────────────────────
+function setBucketFilter(bucket) {
+  _bucketFilter = bucket;
+  document.querySelectorAll('.bucket').forEach(b => b.classList.remove('active-filter'));
+  const idMap = {'all':'bkt-all','current':'bkt-current','1-29':'bkt-1-29','30-59':'bkt-30-59','60-89':'bkt-60-89','90+':'bkt-90'};
+  const el = document.getElementById(idMap[bucket]);
+  if (el) el.classList.add('active-filter');
+  applyFilters();
+}
+
+// ── FILTERS ───────────────────────────────────────────────────────────
+function applyFilters() {
+  const q        = (document.getElementById('search-inp').value || '').toLowerCase().trim();
+  const status   = document.getElementById('filter-status').value.toLowerCase();
+  const investor = document.getElementById('filter-investor').value;
+
+  _filtered = _allLoans.filter(l => {
+    if (q && !((l.borrower_name||'').toLowerCase().includes(q) ||
+               (l.loan_number||'').toLowerCase().includes(q)   ||
+               (l.property_address||'').toLowerCase().includes(q))) return false;
+
+    if (status) {
+      const ls = (l.loan_status||'').toLowerCase();
+      const fs = (l.fc_status||'').toLowerCase();
+      if (status === 'active' && ls !== 'active')           return false;
+      if (status === 'fc'     && !ls.includes('fc') && !ls.includes('foreclos') && fs === 'none') return false;
+      if (status === 'bkr'    && fs !== 'bkr')              return false;
+      if (status === 'reo'    && ls !== 'reo')               return false;
+      if (status === 'paid'   && !ls.includes('paid'))       return false;
+    }
+
+    if (investor && l.investor_name !== investor) return false;
+
+    // Bucket filter
+    const dpd = parseInt(l.days_past_due) || 0;
+    if (_bucketFilter === 'current' && dpd !== 0)                      return false;
+    if (_bucketFilter === '1-29'    && (dpd < 1  || dpd > 29))        return false;
+    if (_bucketFilter === '30-59'   && (dpd < 30 || dpd > 59))        return false;
+    if (_bucketFilter === '60-89'   && (dpd < 60 || dpd > 89))        return false;
+    if (_bucketFilter === '90+'     && dpd < 90)                       return false;
+
+    return true;
+  });
+
+  sortAndRender();
+}
+
+// ── SORT ──────────────────────────────────────────────────────────────
+function sortBy(col) {
+  if (_sortCol === col) _sortDir *= -1;
+  else { _sortCol = col; _sortDir = -1; }
+  document.querySelectorAll('th').forEach(th => {
+    th.classList.remove('sorted');
+    const arrow = th.querySelector('.sort-arrow');
+    if (arrow) arrow.textContent = '▲';
+  });
+  const th = document.querySelector(`th[data-col="${col}"]`);
+  if (th) {
+    th.classList.add('sorted');
+    const arrow = th.querySelector('.sort-arrow');
+    if (arrow) arrow.textContent = _sortDir === 1 ? '▲' : '▼';
+  }
+  sortAndRender();
+}
+
+function sortAndRender() {
+  const col = _sortCol;
+  const dir = _sortDir;
+  _filtered.sort((a, b) => {
+    let av = a[col], bv = b[col];
+    if (col === 'current_upb' || col === 'annual_rate' || col === 'missed_payments' || col === 'days_past_due') {
+      av = parseFloat(av) || 0;
+      bv = parseFloat(bv) || 0;
+    } else if (col === 'updated_at' || col === 'next_due_date') {
+      av = av ? new Date(av).getTime() : 0;
+      bv = bv ? new Date(bv).getTime() : 0;
+    } else {
+      av = (av || '').toLowerCase();
+      bv = (bv || '').toLowerCase();
+    }
+    if (av < bv) return -1 * dir;
+    if (av > bv) return  1 * dir;
+    return 0;
+  });
+  renderTable();
+}
+
+// ── RENDER TABLE ──────────────────────────────────────────────────────
+function renderTable() {
+  const tbody = document.getElementById('portfolio-body');
+  document.getElementById('result-count').textContent =
+    `${_filtered.length} of ${_allLoans.length} loan${_allLoans.length !== 1 ? 's' : ''}`;
+
+  if (!_filtered.length) {
+    tbody.innerHTML = `<tr class="state-row"><td colspan="12">${
+      _allLoans.length ? 'No loans match the current filters.' : 'No loans in portfolio yet. Click <b>+ New Loan</b> to add the first one.'
+    }</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = _filtered.map(l => {
+    const missed = parseInt(l.missed_payments) || 0;
+    const dpd    = parseInt(l.days_past_due)   || 0;
+    return `<tr ondblclick="openLoan('${l.id}')">
+      <td class="td-loan">${l.loan_number || '—'}</td>
+      <td class="td-borrower">${l.borrower_name || '—'}</td>
+      <td class="td-addr" title="${l.property_address || ''}">${l.property_address || '—'}</td>
+      <td style="font-size:10px;color:var(--g60)">${l.investor_name || '—'}</td>
+      <td class="td-upb td-mono">${l.current_upb > 0 ? fmt$(l.current_upb) : '—'}</td>
+      <td class="td-rate td-mono">${l.annual_rate ? parseFloat(l.annual_rate).toFixed(3) + '%' : '—'}</td>
+      <td class="td-missed ${missedClass(missed)}">${missed}</td>
+      <td class="td-dpd">${dpd > 0 ? dpd : '—'}</td>
+      <td>${statusPill(l.loan_status)}</td>
+      <td style="font-size:10px;color:var(--g60)">${fmtDate(l.next_due_date)}</td>
+      <td class="td-updated">${fmtDate(l.updated_at)}</td>
+      <td class="td-actions"><button class="open-btn" onclick="openLoan('${l.id}')">Open →</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── OPEN LOAN ─────────────────────────────────────────────────────────
+function openLoan(id) {
+  window.location.href = 'calculator.html?loan=' + encodeURIComponent(id);
+}
+
+// ── NEW LOAN MODAL ────────────────────────────────────────────────────
+function openNewLoanModal() {
+  document.getElementById('new-loan-number').value = '';
+  document.getElementById('new-borrower').value    = '';
+  document.getElementById('new-investor').value    = '';
+  document.getElementById('new-loan-err').style.display = 'none';
+  document.getElementById('new-loan-modal').classList.add('open');
+  setTimeout(() => document.getElementById('new-loan-number').focus(), 50);
+}
+function closeNewLoanModal() {
+  document.getElementById('new-loan-modal').classList.remove('open');
+}
+document.getElementById('new-loan-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('new-loan-modal')) closeNewLoanModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNewLoanModal();
+  if (e.key === 'F5')     { e.preventDefault(); loadPortfolio(); }
+});
+
+async function createNewLoan() {
+  const loanNum  = (document.getElementById('new-loan-number').value || '').trim();
+  const borrower = (document.getElementById('new-borrower').value    || '').trim();
+  const investor = (document.getElementById('new-investor').value    || '').trim();
+  const errEl    = document.getElementById('new-loan-err');
+
+  if (!loanNum)  { showErr('Loan Number is required.'); return; }
+  if (!borrower) { showErr('Borrower Name is required.'); return; }
+
+  errEl.style.display = 'none';
+  const btn = document.querySelector('.modal-btn.ok');
+  btn.textContent = 'Creating…';
+  btn.disabled = true;
+
+  try {
+    const fields = {
+      'mc-loan-number':     loanNum,
+      'mc-borrower':        borrower,
+      'mc-investor-banner': investor,
+      'brow-first':         borrower.split(' ')[0] || '',
+      'brow-last':          borrower.split(' ').slice(1).join(' ') || '',
+    };
+    const resp = await fetch(API + '/accounts', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ fields }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'HTTP ' + resp.status);
+    // Navigate directly into the new loan
+    window.location.href = 'calculator.html?loan=' + encodeURIComponent(data.id);
+  } catch (err) {
+    btn.textContent = 'Create & Open';
+    btn.disabled = false;
+    if (err.message.includes('already exists')) {
+      showErr('Loan number "' + loanNum + '" already exists. Please use a different number.');
+    } else {
+      showErr('Could not create loan: ' + err.message);
+    }
+  }
+}
+function showErr(msg) {
+  const el = document.getElementById('new-loan-err');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+setBucketFilter('all');
+loadPortfolio();
+// Auto-refresh every 5 minutes
+setInterval(loadPortfolio, 5 * 60 * 1000);
+</script>
+</body>
+</html>
